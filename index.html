@@ -189,9 +189,9 @@
     .bag-hero-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; margin-bottom: 20px; }
 
     /* Featured club — unified hero panel */
-    .bag-featured { display: flex; gap: 0; background: var(--bg-alt); margin-bottom: 1px; min-height: 260px; border-bottom: 1px solid var(--border); }
-    .bag-featured-img { flex: 0 0 55%; display: flex; align-items: center; justify-content: center; padding: 28px 16px 28px 28px; overflow: hidden; background: var(--bg-alt); }
-    .bag-featured-img img { max-width: 100%; max-height: 260px; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(1); transition: filter .3s; }
+    .bag-featured { display: flex; gap: 0; background: var(--bg-alt); margin-bottom: 1px; height: 260px; border-bottom: 1px solid var(--border); }
+    .bag-featured-img { flex: 0 0 55%; height: 260px; display: flex; align-items: center; justify-content: center; padding: 28px 16px 28px 28px; overflow: hidden; background: var(--bg-alt); }
+    .bag-featured-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(1); transition: filter .3s; }
     .bag-featured-img img:hover { filter: grayscale(0); }
     .bag-featured-img .bag-featured-icon { color: var(--accent); opacity: .25; }
     .bag-featured-info { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 28px 28px 28px 12px; border-left: 1px solid var(--border); }
@@ -201,7 +201,7 @@
     .bag-featured-stats { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 2; }
     .bag-featured-stats strong { color: var(--text); font-weight: 500; }
     @media(max-width:520px) {
-      .bag-featured { flex-direction: column; min-height: auto; }
+      .bag-featured { flex-direction: column; height: auto; }
       .bag-featured-img { flex: none; height: 200px; padding: 20px; border-left: none; border-bottom: 1px solid var(--border); }
       .bag-featured-info { padding: 20px 24px; border-left: none; }
     }
@@ -651,9 +651,9 @@ const CLUB_IMAGES = {
   "Titleist|620 MB":       "images/620 MB/620 MB Catalog 1 RGB Cc36bf.jpg",
 
   // ── Titleist · Wedges ──
-  "Titleist|Vokey SM11":       "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
-  "Titleist|Vokey SM10":       "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
-  "Titleist|Vokey SM9":        "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
+  "Titleist|Vokey SM11":       "images/Vokey Design SM11 wedges/Titleist Vokey SM11 54 10 S Tour Chrome Catalog 01 CMYK 014e6b.png",
+  "Titleist|Vokey SM10":       "images/Vokey Design SM11 wedges/Titleist Vokey SM11 54 10 S Tour Chrome Catalog 01 CMYK 014e6b.png",
+  "Titleist|Vokey SM9":        "images/Vokey Design SM11 wedges/Titleist Vokey SM11 54 10 S Tour Chrome Catalog 01 CMYK 014e6b.png",
   "Titleist|Vokey WedgeWorks": "images/Vokey WedgeWorks grinds/TITLEIST VOKEY 18992 C67fbf.jpg",
 
   // ── Scotty Cameron · Putters ──
