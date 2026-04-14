@@ -80,7 +80,7 @@
     .home-section { max-width: var(--max); margin: 0 auto; padding: 36px 24px 40px; border-bottom: 1px solid var(--border); }
     .sec-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
     .sec-title { font-family: var(--disp); font-size: 22px; margin-bottom: 8px; }
-    .sec-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; max-width: 480px; }
+    .sec-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
 
     /* Courses */
     .course-group { margin-bottom: 24px; }
@@ -127,7 +127,7 @@
     .cat-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     .cat-btn svg { width: 13px; height: 13px; }
     .browse-list { max-width: var(--max); margin: 0 auto; padding: 0 24px 48px; }
-    .browse-card { display: block; width: 100%; background: transparent; border: none; text-align: left; padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .browse-card { display: block; width: 100%; background: transparent; border: none; text-align: left; padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .browse-card:first-child { border-top: 1px solid var(--border); margin-top: 24px; }
     .browse-card:hover .bc-inner { background: var(--bg-alt); margin: -12px; padding: 12px; }
     .bc-inner { border-radius: 2px; transition: all .12s; }
@@ -201,13 +201,13 @@
     .bag-notify-note { font-size: 11px; color: var(--muted); margin-top: -8px; margin-bottom: 14px; line-height: 1.5; }
     .bag-save-bar { display: flex; gap: 12px; align-items: center; margin-top: 0; }
     .about-page { max-width: var(--max); margin: 0 auto; padding: 48px 24px 80px; }
-    .about-hero { border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+    .about-hero { padding-bottom: 40px; margin-bottom: 40px; }
     .about-hero-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
     .about-hero-title { font-family: var(--disp); font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 20px; }
-    .about-hero-sub { font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.7; }
+    .about-hero-sub { font-size: 19px; color: var(--text); line-height: 1.6; }
     .about-section { margin-bottom: 44px; }
     .about-section-title { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-    .about-body { font-size: 14px; line-height: 1.8; color: var(--text); max-width: 560px; }
+    .about-body { font-size: 14px; line-height: 1.8; color: var(--text); }
     .about-body p { margin-bottom: 14px; }
     .about-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
     .about-contact { display: inline-block; margin-top: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: var(--accent); border: 1px solid var(--accent); padding: 8px 18px; border-radius: 2px; text-decoration: none; }
@@ -244,8 +244,10 @@
     }
 
     /* Carousel strip — thumbnail selectors below featured */
-    .bag-carousel { display: flex; gap: 1px; background: var(--border); overflow-x: auto; scrollbar-width: none; }
+    .bag-carousel { display: flex; gap: 0; background: var(--border); overflow-x: auto; scrollbar-width: none; }
     .bag-carousel::-webkit-scrollbar { display: none; }
+    .bag-cat-group { display: flex; gap: 1px; background: var(--border); flex-shrink: 0; }
+    .bag-cat-group-label { background: var(--bg-alt); display: flex; align-items: flex-end; padding: 0 8px 8px; font-family: var(--mono); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; writing-mode: vertical-lr; transform: rotate(180deg); flex-shrink: 0; }
     .bag-club-card { background: var(--bg); padding: 10px 12px; min-width: 100px; flex: 1; cursor: pointer; text-align: center; transition: background .12s, opacity .12s; position: relative; opacity: .6; }
     .bag-club-card:hover { opacity: .85; background: var(--bg-alt); }
     .bag-club-card.active { background: var(--bg-alt); opacity: 1; }
@@ -285,6 +287,8 @@
     .bag-tier-divider { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 24px 0 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
     .bag-empty-state { text-align: center; padding: 48px 0; color: var(--muted); }
     .bag-empty-state p { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .bag-add-moment-cta { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+    .bag-add-moment-cta p { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 10px; }
 
     /* Add a Moment form */
     .moment-form { max-width: var(--max); margin: 0 auto; padding: 28px 24px 48px; }
@@ -432,7 +436,7 @@ const ENTRIES = [
     id:"tiger-woods--masters--2001", tier:"LANDMARK", rank:8, era:"modern", lore:false,
     gearCategories:["wedges","putter","irons"],
     player:{name:"Tiger Woods", type:"pro"},
-    event:{name:"2001 Masters", course:"Augusta National Golf Club", date:"2001-04-08", round:"Final Round"},
+    event:{name:"2001 Masters", course:"Augusta National", date:"2001-04-08", round:"Final Round"},
     conditions:{weather:"Augusta in April. Perfect.", surface:"Augusta National.", stakes:"The last piece of the Tiger Slam — four consecutive major titles."},
     gear:[
       {category:"wedges", brand:"Titleist", model:"Vokey WedgeWorks", item:"Titleist Vokey 200 Series wedges", note:"258-08 sand wedge, 260-06 lob wedge. Bob Vokey lightly touched the heel of each for relief. Tiger had a feel for exact leading edge radius — and Vokey hit it. These wedges later sold at auction for nearly $1M.", affiliateUrl:null, clubImageUrl:null, legendary:true},
@@ -489,7 +493,7 @@ const ENTRIES = [
     id:"rory-mcilroy--masters--2026", tier:"LANDMARK", rank:3, era:"modern", lore:false,
     gearCategories:["driver","irons","putter"],
     player:{name:"Rory McIlroy", type:"pro"},
-    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    event:{name:"2026 Masters", course:"Augusta National", date:"2026-04-12", round:"Final Round"},
     conditions:{weather:"Perfect Augusta Sunday.", surface:"Augusta National — firm, fast greens.", stakes:"Back-to-back Masters on the line."},
     gear:[
       {category:"irons", brand:"TaylorMade", model:"RORS PROTO", item:"TaylorMade RORS PROTO MB irons", note:"Built to his specs. Blades 5 through 9. Every approach shot had to be earned.", affiliateUrl:null, clubImageUrl:null},
@@ -504,7 +508,7 @@ const ENTRIES = [
     id:"scottie-scheffler--masters--2026", tier:"SIGNIFICANT", rank:4, era:"modern", lore:false,
     gearCategories:["irons","putter"],
     player:{name:"Scottie Scheffler", type:"pro"},
-    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    event:{name:"2026 Masters", course:"Augusta National", date:"2026-04-12", round:"Final Round"},
     conditions:{weather:"Firm and fast Augusta Sunday.", surface:"Augusta National.", stakes:"World No. 1 hunting a Masters title."},
     gear:[
       {category:"irons", brand:"TaylorMade", model:"P7TW", item:"TaylorMade P7TW irons", note:"5-iron through PW. Tiger's model. Dynamic Gold Tour Issue X100. No margin for error — and he never needed any.", affiliateUrl:null, clubImageUrl:null},
@@ -518,7 +522,7 @@ const ENTRIES = [
     id:"cameron-young--masters--2026", tier:"SIGNIFICANT", rank:5, era:"modern", lore:false,
     gearCategories:["driver","irons","putter"],
     player:{name:"Cameron Young", type:"pro"},
-    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    event:{name:"2026 Masters", course:"Augusta National", date:"2026-04-12", round:"Final Round"},
     conditions:{weather:"Augusta Sunday. High pressure.", surface:"Augusta National — greens running fast.", stakes:"Starting the day tied for the lead."},
     gear:[
       {category:"driver", brand:"Titleist", model:"GT3", item:"Titleist GT3 Driver", note:"11°. Diamana PD 60g TX. The club he trusted all week. Started Sunday tied for the lead.", affiliateUrl:null, clubImageUrl:null},
@@ -533,7 +537,7 @@ const ENTRIES = [
     id:"tyrrell-hatton--masters--2026", tier:"SIGNIFICANT", rank:6, era:"modern", lore:false,
     gearCategories:["irons","driver"],
     player:{name:"Tyrrell Hatton", type:"pro"},
-    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    event:{name:"2026 Masters", course:"Augusta National", date:"2026-04-12", round:"Final Round"},
     conditions:{weather:"Augusta Sunday.", surface:"Augusta National.", stakes:"T3 in a major for the first time."},
     gear:[
       {category:"irons", brand:"Ping", model:"Blueprint S", item:"Ping Blueprint S irons", note:"7-iron through PW. Nippon Modus3 Tour 120 X. Hit all 18 greens in regulation — first player to do it at Augusta since 2020.", affiliateUrl:null, clubImageUrl:null},
@@ -874,7 +878,7 @@ function thisWeekHTML() {
       <span class="hero-date">${THIS_WEEK.label}</span>
     </div>
     <div class="hero-grid">${cards}</div>
-    <p class="sec-desc" style="padding: 0 4px; margin-top: 14px;">Editorially selected — the shots, clubs, and moments that define a week, a season, or a career. Updated as the log grows.</p>
+    <p class="sec-desc" style="padding: 0 4px; margin-top: 14px;">The shots, clubs, and moments that define a week, a season, or a career. Updated as the log grows.</p>
   </div>`;
 }
 
@@ -910,7 +914,7 @@ function coursesHTML() {
     <div class="course-row" data-entry="${e.id}">
       <div>
         <div class="course-row-player">${esc(e.player.name)}</div>
-        <div class="course-row-shot">${esc(e.shot.slice(0,65))}…</div>
+        <div class="course-row-shot">${esc(e.shot.slice(0,120))}…</div>
       </div>
       <div class="course-row-event">${esc(e.event.name)}</div>
     </div>`).join('');
@@ -1002,15 +1006,24 @@ function clubsOf2026HTML() {
     .sort((a,b) => b.appearances.length - a.appearances.length);
   if (clubs.length === 0) return '';
 
-  const cards = clubs.map(({g, appearances}) => {
+  const cardItems = clubs.map(({g, appearances}) => {
     const players = appearances.map(e => esc(e.player.name)).join(', ');
     return `<div class="lethal-card" data-entry="${appearances[0].id}">
       <div class="lethal-icon">${icon(g.category, 24)}</div>
       <div class="lethal-club">${esc(g.item)}</div>
       <div class="lethal-player">${players}</div>
-      <div class="lethal-note">${appearances.length} moments this season</div>
+      <div class="lethal-note">${appearances.length} moment${appearances.length!==1?'s':''} this season</div>
     </div>`;
-  }).join('');
+  });
+  // Add ghost placeholder for odd count so grid doesn't leave a half-row
+  if (cardItems.length % 2 !== 0) {
+    cardItems.push(`<div class="lethal-card" style="background:var(--bg-alt);opacity:.4;cursor:default;pointer-events:none;">
+      <div class="lethal-icon" style="opacity:.3;">${icon('all',24)}</div>
+      <div class="lethal-club" style="color:var(--border);">More to come</div>
+      <div class="lethal-note">As the season plays on</div>
+    </div>`);
+  }
+  const cards = cardItems.join('');
 
   return `<div class="lethal-section">
     <div class="sec-eyebrow">Equipment</div>
@@ -1048,7 +1061,7 @@ function browseHTML() {
             <div class="bc-player">${esc(e.player.name)}</div>
             <div class="bc-event">${esc(e.event.name)}${e.event.round?` — ${esc(e.event.round)}`:''}</div>
             <div class="bc-shot">${esc(e.shot)}</div>
-            <div class="bc-note">"${esc(e.note)}"</div>
+            <div class="bc-note">${esc(e.note)}</div>
           </div>
         </button>`;
       }).join('');
@@ -1216,19 +1229,33 @@ function bagResultsHTML() {
     </div>
   </div>`;
 
-  // Thumbnail strip — all clubs in the bag
-  const carouselCards = bag.map((c, i) => {
-    const catIcon = c.category === 'fairway-wood' ? 'driver' : c.category;
-    const thumbImg = getClubImage(c.brand, c.model);
-    const thumbHTML = thumbImg
-      ? `<img src="${esc(thumbImg)}" alt="${esc(c.model)}">`
-      : icon(catIcon, 22);
-    return `<div class="bag-club-card${i===activeIdx?' active':''}" data-bag-club-idx="${i}">
-      <div class="bag-club-img">${thumbHTML}</div>
-      <div class="bag-club-model">${esc(c.model)}</div>
-      <div class="bag-club-brand">${esc(c.brand)}</div>
-    </div>`;
-  }).join('');
+  // Thumbnail strip — grouped by category with labels
+  const catOrder = BAG_CATEGORIES.map(c => c.id);
+  const grouped = {};
+  bag.forEach((c, i) => {
+    const cat = c.category || 'irons';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push({c, i});
+  });
+
+  const carouselCards = catOrder
+    .filter(catId => grouped[catId] && grouped[catId].length > 0)
+    .map(catId => {
+      const catLabel = BAG_CATEGORIES.find(c => c.id === catId)?.label || catId;
+      const cards = grouped[catId].map(({c, i}) => {
+        const catIcon = c.category === 'fairway-wood' ? 'driver' : c.category;
+        const thumbImg = getClubImage(c.brand, c.model);
+        const thumbHTML = thumbImg
+          ? `<img src="${esc(thumbImg)}" alt="${esc(c.model)}">`
+          : icon(catIcon, 22);
+        return `<div class="bag-club-card${i===activeIdx?' active':''}" data-bag-club-idx="${i}">
+          <div class="bag-club-img">${thumbHTML}</div>
+          <div class="bag-club-model">${esc(c.model)}</div>
+          <div class="bag-club-brand">${esc(c.brand)}</div>
+        </div>`;
+      }).join('');
+      return `<div class="bag-cat-group"><div class="bag-cat-group-label">${esc(catLabel)}</div>${cards}</div>`;
+    }).join('');
 
   // Filter toggle — only Exact and Brand. No "All" — category-level matches
   // under a specific club heading break the connection.
@@ -1289,6 +1316,11 @@ function bagResultsHTML() {
           <div class="bag-moment-used">${usedLine}</div>
         </div>`;
       }).join('');
+      // Always show Add a Moment at the bottom
+      momentsHTML += `<div class="bag-add-moment-cta">
+        <p>Have a moment with your ${esc(activeClub.brand)} ${esc(activeClub.model)}?</p>
+        <button class="bag-save-btn" data-action="add-moment">Add a Moment</button>
+      </div>`;
     } else {
       const clubName = `${esc(activeClub.brand)} ${esc(activeClub.model)}`;
       const broaden = filter === 'exact'
@@ -1298,10 +1330,10 @@ function bagResultsHTML() {
         <div style="margin-bottom:16px;">${icon(activeClub.category === 'fairway-wood' ? 'driver' : activeClub.category, 36)}</div>
         <p>No ${filter==='exact' ? clubName : esc(activeClub.brand) + ' ' + esc(activeClub.category)} moments yet.</p>
         ${broaden}
-        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
-          <p style="margin-bottom:8px;">You play this club. What's the moment?</p>
-          <button class="bag-save-btn" data-action="add-moment" style="margin-top:6px;">Add a Moment</button>
-        </div>
+      </div>
+      <div class="bag-add-moment-cta">
+        <p>You play this club. What's the moment?</p>
+        <button class="bag-save-btn" data-action="add-moment">Add a Moment</button>
       </div>`;
     }
   }
@@ -1393,22 +1425,22 @@ function aboutHTML() {
     <div class="about-hero">
       <div class="about-hero-eyebrow">About</div>
       <div class="about-hero-title">Every shot<br>has a club.</div>
-      <p class="about-hero-sub">The Gear Log is an archive of the equipment behind golf's most significant moments — and a way to connect your own bag to that history.</p>
+      <p class="about-hero-sub">The Gear Log is an archive of the equipment behind golf's most significant moments, and a way to connect your own bag to that history.</p>
     </div>
 
     <div class="about-section">
       <div class="about-section-title">The Idea</div>
       <div class="about-body">
-        <p>Golf gear matters. Not in a spec-sheet way — in a story way. The putter Tiger trusted for 14 majors. The wedges that completed the Tiger Slam. The driver Rory used to win back-to-back at Augusta. Equipment is the physical thread connecting a player to a moment.</p>
-        <p>The Gear Log documents those connections: what club, which player, which shot, which tournament. Then it matches your bag against that record — so when you pull a Phantom X or a set of RORS PROTO irons, you know exactly whose hands it's been in before.</p>
+        <p>Golf gear matters. Not in a spec-sheet way. In a story way. The putter Tiger trusted for 14 majors. The wedges that completed the Tiger Slam. The driver Rory used to win back-to-back at Augusta. Equipment is the physical thread connecting a player to a moment.</p>
+        <p>The Gear Log documents those connections: what club, which player, which shot, which tournament. Then it matches your bag against that record, so when you pull a Phantom X or a set of RORS PROTO irons, you know exactly whose hands it's been in before.</p>
       </div>
     </div>
 
     <div class="about-section">
       <div class="about-section-title">How It Works</div>
       <div class="about-body">
-        <p>Every entry in the log is researched from public sources — tour media centers, official newsrooms, equipment reports, and historical records. Nothing is fabricated. If a club model, loft, or shaft spec is listed, it comes from a citable source.</p>
-        <p>Add your bag under My Bag. The log will surface every documented moment where your clubs — or their closest relatives — appeared at the highest level. As the log grows, so does your history.</p>
+        <p>Every entry in the log is researched from public sources: tour media centers, official newsrooms, equipment reports, and historical records. Nothing is fabricated. If a club model, loft, or shaft spec is listed, it comes from a citable source.</p>
+        <p>Add your bag under My Bag. The log will surface every documented moment where your clubs, or their closest relatives, appeared at the highest level. As the log grows, so does your history.</p>
       </div>
     </div>
 
@@ -1416,15 +1448,15 @@ function aboutHTML() {
       <div class="about-section-title">Sources</div>
       <div class="about-body">
         <p>Equipment data is sourced from: PGA Tour equipment reports, Titleist / TaylorMade / Callaway / Ping / Scotty Cameron official media centers, Golf Digest WITB coverage, GolfWRX, and contemporaneous tournament reporting. Historical entries draw on Wikipedia, Golf Channel archives, and official major championship records.</p>
-        <p>Where a source is uncertain or a spec is unverified, it's noted in the entry. The log is a living document — corrections and additions are welcome.</p>
+        <p>Where a source is uncertain or a spec is unverified, it's noted in the entry. The log is a living document. Corrections and additions are welcome.</p>
       </div>
     </div>
 
     <div class="about-section">
       <div class="about-section-title">Get In Touch</div>
       <div class="about-body">
-        <p>Have a moment that should be logged? A bag to add? A correction? Or just want to talk gear?</p>
-        <a class="about-contact" href="mailto:dmurphy.dpm@gmail.com">Send a note →</a>
+        <p>Have a moment that should be logged? A correction? Want to talk gear?</p>
+        <p><a href="mailto:dan@thegearlog.golf" style="color:var(--accent);font-family:var(--mono);font-size:13px;letter-spacing:.04em;">dan@thegearlog.golf</a></p>
       </div>
     </div>
   </div>`;
