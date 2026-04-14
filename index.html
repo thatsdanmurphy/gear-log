@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Gear Log</title>
+  <script defer src="/_vercel/insights/script.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -307,13 +308,13 @@ function icon(name, size=13) {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const THIS_WEEK = {
-  label: "All Time",
+  label: "Masters Week",
   entryIds: [
-    "jack-nicklaus--masters--1986",
+    "rory-mcilroy--masters--2026",
     "tiger-woods--masters--2019",
-    "john-daly--pga-championship--1991",
+    "jack-nicklaus--masters--1986",
+    "phil-mickelson--masters--2004",
     "rory-mcilroy--us-open--2011",
-    "francis-ouimet--us-open--1913",
   ]
 };
 
@@ -413,6 +414,21 @@ const ENTRIES = [
     ],
     shot:"16-under, 8-shot win. Congressional bent toward him all week. He never pressed — just kept playing the next shot.",
     note:"Some weeks the swing is so far ahead of the doubt there's nothing to manage.",
+    youtubeId:null
+  },
+  {
+    id:"rory-mcilroy--masters--2026", tier:"LANDMARK", rank:3, era:"modern", lore:false,
+    gearCategories:["driver","irons","putter"],
+    player:{name:"Rory McIlroy", type:"pro"},
+    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    conditions:{weather:"Perfect Augusta Sunday.", surface:"Augusta National — firm, fast greens.", stakes:"Back-to-back Masters on the line."},
+    gear:[
+      {category:"irons", brand:"TaylorMade", model:"RORS PROTO", item:"TaylorMade RORS PROTO MB irons", note:"Built to his specs. Blades 5 through 9. Every approach shot had to be earned.", affiliateUrl:null, clubImageUrl:null},
+      {category:"driver", brand:"TaylorMade", model:"Qi35", item:"TaylorMade Qi4D FCT Driver", note:"8° loft. Fuji Ventus Black. Hit fairways when he needed them most.", affiliateUrl:null, clubImageUrl:null},
+      {category:"putter", brand:"TaylorMade", model:"Spider Tour X", item:"TaylorMade Spider Tour X", note:"Torched finish, short slant. Drained it when the tournament was on the line.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"Won by one over Scottie Scheffler. Became only the fourth player ever to win back-to-back Masters — joining Nicklaus, Faldo, and Tiger.",
+    note:"He didn't blow it. He just kept going.",
     youtubeId:null
   },
   {
