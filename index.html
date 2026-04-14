@@ -194,7 +194,24 @@
     .bag-row-preview-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; }
     .bag-remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 7px 4px; line-height: 1; }
     .bag-remove-btn:hover { color: var(--text); }
-    .bag-save-bar { display: flex; gap: 12px; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .bag-notify-row { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .bag-notify-label { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .bag-notify-input { width: 100%; max-width: 320px; font-family: var(--body); font-size: 13px; padding: 8px 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 2px; margin-bottom: 14px; }
+    .bag-notify-input:focus { outline: none; border-color: var(--accent); }
+    .bag-notify-note { font-size: 11px; color: var(--muted); margin-top: -8px; margin-bottom: 14px; line-height: 1.5; }
+    .bag-save-bar { display: flex; gap: 12px; align-items: center; margin-top: 0; }
+    .about-page { max-width: var(--max); margin: 0 auto; padding: 48px 24px 80px; }
+    .about-hero { border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+    .about-hero-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .about-hero-title { font-family: var(--disp); font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 20px; }
+    .about-hero-sub { font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.7; }
+    .about-section { margin-bottom: 44px; }
+    .about-section-title { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .about-body { font-size: 14px; line-height: 1.8; color: var(--text); max-width: 560px; }
+    .about-body p { margin-bottom: 14px; }
+    .about-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .about-contact { display: inline-block; margin-top: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: var(--accent); border: 1px solid var(--accent); padding: 8px 18px; border-radius: 2px; text-decoration: none; }
+    .about-contact:hover { background: var(--accent); color: #fff; }
     .bag-save-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 8px 20px; background: var(--accent); color: #fff; border: none; cursor: pointer; border-radius: 2px; }
     .bag-save-btn:hover { opacity: .85; }
     .bag-clear-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0; }
@@ -822,6 +839,7 @@ function headerHTML() {
       <button class="hdr-link${state.view==='home'?' active':''}" data-action="home">Log</button>
       <button class="hdr-link${state.view==='browse'?' active':''}" data-action="browse">By Club</button>
       <button class="hdr-link${state.view==='mybag'||state.view==='mybag-edit'?' active':''}" data-action="mybag">My Bag</button>
+      <button class="hdr-link${state.view==='about'?' active':''}" data-action="about">About</button>
     </nav>
   </header>`;
 }
@@ -1151,10 +1169,15 @@ function bagEditHTML() {
     <div class="sec-title">Define Your Bag</div>
     <p class="bag-intro">Enter what you carry. Brand and model — that's it. We'll show you what happened when those clubs showed up under pressure.</p>
     ${sections}
-    <div class="bag-save-bar">
-      <button class="bag-save-btn" data-action="save-bag">Save Bag</button>
-      <button class="bag-clear-btn" data-action="clear-bag">Clear</button>
-      <span class="bag-saved-msg" id="bag-saved-msg">Saved</span>
+    <div class="bag-notify-row">
+      <div class="bag-notify-label">Get notified when we log a moment with your clubs</div>
+      <input class="bag-notify-input" id="bag-email" type="email" placeholder="your@email.com" value="${localStorage.getItem('gearlog_email')||''}">
+      <div class="bag-notify-note">Optional. We'll reach out when a shot surfaces with gear from your bag. No spam, ever.</div>
+      <div class="bag-save-bar">
+        <button class="bag-save-btn" data-action="save-bag">Save Bag</button>
+        <button class="bag-clear-btn" data-action="clear-bag">Clear</button>
+        <span class="bag-saved-msg" id="bag-saved-msg">Saved</span>
+      </div>
     </div>
   </div>`;
 }
@@ -1365,12 +1388,55 @@ function mybagHTML() {
 }
 
 // ─── Render ───────────────────────────────────────────────────────────────────
+function aboutHTML() {
+  return `<div class="about-page">
+    <div class="about-hero">
+      <div class="about-hero-eyebrow">About</div>
+      <div class="about-hero-title">Every shot<br>has a club.</div>
+      <p class="about-hero-sub">The Gear Log is an archive of the equipment behind golf's most significant moments — and a way to connect your own bag to that history.</p>
+    </div>
+
+    <div class="about-section">
+      <div class="about-section-title">The Idea</div>
+      <div class="about-body">
+        <p>Golf gear matters. Not in a spec-sheet way — in a story way. The putter Tiger trusted for 14 majors. The wedges that completed the Tiger Slam. The driver Rory used to win back-to-back at Augusta. Equipment is the physical thread connecting a player to a moment.</p>
+        <p>The Gear Log documents those connections: what club, which player, which shot, which tournament. Then it matches your bag against that record — so when you pull a Phantom X or a set of RORS PROTO irons, you know exactly whose hands it's been in before.</p>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-section-title">How It Works</div>
+      <div class="about-body">
+        <p>Every entry in the log is researched from public sources — tour media centers, official newsrooms, equipment reports, and historical records. Nothing is fabricated. If a club model, loft, or shaft spec is listed, it comes from a citable source.</p>
+        <p>Add your bag under My Bag. The log will surface every documented moment where your clubs — or their closest relatives — appeared at the highest level. As the log grows, so does your history.</p>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-section-title">Sources</div>
+      <div class="about-body">
+        <p>Equipment data is sourced from: PGA Tour equipment reports, Titleist / TaylorMade / Callaway / Ping / Scotty Cameron official media centers, Golf Digest WITB coverage, GolfWRX, and contemporaneous tournament reporting. Historical entries draw on Wikipedia, Golf Channel archives, and official major championship records.</p>
+        <p>Where a source is uncertain or a spec is unverified, it's noted in the entry. The log is a living document — corrections and additions are welcome.</p>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-section-title">Get In Touch</div>
+      <div class="about-body">
+        <p>Have a moment that should be logged? A bag to add? A correction? Or just want to talk gear?</p>
+        <a class="about-contact" href="mailto:dmurphy.dpm@gmail.com">Send a note →</a>
+      </div>
+    </div>
+  </div>`;
+}
+
 function render() {
   const entry = ENTRIES.find(e=>e.id===state.entryId);
   let body = '';
   if (state.view==='entry' && entry) body = entryHTML(entry);
   else if (state.view==='mybag' || state.view==='mybag-edit' || state.view==='add-moment') body = mybagHTML();
   else if (state.view==='browse') body = browseHTML();
+  else if (state.view==='about') body = aboutHTML();
   else body = homeHTML();
 
   document.getElementById('app').innerHTML = headerHTML() + body;
@@ -1384,6 +1450,7 @@ function attachEvents() {
       const a = el.dataset.action;
       if (a==='home')      setState({view:'home',   entryId:null});
       if (a==='browse')    setState({view:'browse',  entryId:null});
+      if (a==='about')     setState({view:'about',   entryId:null});
       if (a==='back')      setState({view:'home',   entryId:null});
       if (a==='mybag')     setState({view:'mybag',   entryId:null});
       if (a==='mybag-edit') setState({view:'mybag-edit', entryId:null});
@@ -1527,6 +1594,23 @@ function readBagFromForm() {
 function saveBagFromForm() {
   const bag = readBagFromForm().filter(c => c.brand && c.model);
   saveBag(bag);
+
+  // Kit notification signup
+  const email = (document.getElementById('bag-email')?.value || '').trim();
+  if (email && email.includes('@')) {
+    localStorage.setItem('gearlog_email', email);
+    const clubList = bag.map(c => `${c.brand} ${c.model}`).join(', ');
+    const body = new URLSearchParams({
+      email_address: email,
+      'fields[clubs]': clubList
+    });
+    fetch('https://app.kit.com/forms/9327569/subscriptions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    }).catch(() => {}); // silent fail — bag still saves
+  }
+
   setState({view:'mybag'});
 }
 
