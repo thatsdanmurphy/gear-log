@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gear Log</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #F7F4EE;
+      --bg-alt:    #EDEAE2;
+      --text:      #1A1A1A;
+      --muted:     #6B6560;
+      --accent:    #7C5C3A;
+      --accent-lt: #A67C5B;
+      --border:    #D8D3C8;
+      --disp:      'Instrument Serif', Georgia, serif;
+      --mono:      'DM Mono', 'Courier New', monospace;
+      --body:      'Inter', system-ui, sans-serif;
+      --max:       720px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: var(--body); line-height: 1.6; min-height: 100vh; }
+
+    /* Header */
+    .hdr { max-width: var(--max); margin: 0 auto; padding: 28px 24px 18px; display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .hdr-name { font-family: var(--disp); font-size: 26px; font-style: italic; cursor: pointer; }
+    .hdr-nav { display: flex; gap: 20px; }
+    .hdr-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0; }
+    .hdr-link:hover, .hdr-link.active { color: var(--accent); }
+
+    /* Top Shots — Hero Chiclets */
+    .hero-section { max-width: var(--max); margin: 0 auto; padding: 28px 24px 0; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: #d44; animation: pulse 2s infinite; flex-shrink: 0; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.35} }
+    .hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .hero-date { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: auto; }
+    .hero-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); }
+    .hero-card { background: var(--bg-alt); cursor: pointer; display: flex; flex-direction: column; text-align: center; transition: background .12s; overflow: hidden; }
+    .hero-card:hover { background: var(--bg); }
+    .hero-img-box { width: 100%; height: 130px; flex-shrink: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; opacity: .7; overflow: hidden; }
+    .hero-img-box.has-img { background: var(--bg); opacity: 1; }
+    .hero-img-box.has-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; padding: 12px 8px; }
+    .hero-card-body { padding: 12px 12px 16px; display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .hero-rank { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--accent); align-self: flex-start; margin-bottom: 8px; }
+    .hero-club { font-family: var(--disp); font-size: 13px; line-height: 1.25; margin-bottom: 4px; }
+    .hero-player { font-family: var(--mono); font-size: 9px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .hero-event { font-family: var(--mono); font-size: 9px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+    @media(max-width: 580px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card { flex-direction: row; text-align: left; }
+      .hero-img-box { width: 90px; height: 90px; flex-shrink: 0; }
+      .hero-card-body { padding: 14px 16px; align-items: flex-start; }
+      .hero-rank { margin-bottom: 2px; }
+    }
+
+    /* Home sections */
+    .home-section { max-width: var(--max); margin: 0 auto; padding: 36px 24px 40px; border-bottom: 1px solid var(--border); }
+    .sec-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+    .sec-title { font-family: var(--disp); font-size: 22px; margin-bottom: 24px; }
+
+    /* Courses */
+    .course-group { margin-bottom: 24px; }
+    .course-name { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-bottom: 7px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+    .course-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--bg-alt); cursor: pointer; }
+    .course-row:last-child { border-bottom: none; }
+    .course-row:hover { opacity: .7; }
+    .course-row-player { font-family: var(--disp); font-size: 16px; }
+    .course-row-shot { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .course-row-event { font-family: var(--mono); font-size: 10px; color: var(--muted); text-align: right; white-space: nowrap; flex-shrink: 0; }
+
+    /* Course chooser */
+    .course-chooser { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-bottom: 20px; padding-bottom: 2px; }
+    .course-chooser::-webkit-scrollbar { display: none; }
+    .course-chip { padding: 5px 13px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: border-color .12s, color .12s, background .12s; }
+    .course-chip:hover { border-color: var(--accent-lt); color: var(--accent); }
+    .course-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Lore */
+    .lore-desc { font-size: 14px; color: var(--muted); font-style: italic; margin-bottom: 20px; }
+    .lore-cards { display: flex; flex-direction: column; gap: 12px; }
+    .lore-card { border: 1.5px dashed var(--border); padding: 16px 18px; cursor: pointer; text-align: left; background: none; width: 100%; transition: border-color .15s; }
+    .lore-card:hover { border-color: var(--accent-lt); }
+    .lore-card-player { font-family: var(--disp); font-size: 18px; margin-bottom: 2px; }
+    .lore-card-event { font-family: var(--mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .lore-card-shot { font-size: 13px; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+    .lore-card-note { font-family: var(--disp); font-size: 15px; color: var(--accent); }
+
+    /* Era */
+    .era-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+    .era-panel { background: var(--bg); padding: 18px 16px; }
+    .era-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+    .era-dates { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 14px; }
+    .era-entry { display: block; font-family: var(--disp); font-size: 14px; padding: 5px 0; border-bottom: 1px solid var(--border); cursor: pointer; color: var(--text); background: none; border-left: none; border-right: none; border-top: none; text-align: left; width: 100%; }
+    .era-entry:last-child { border-bottom: none; }
+    .era-entry:hover { color: var(--accent); }
+    @media(max-width:520px){ .era-grid{grid-template-columns:1fr} }
+
+    /* Browse */
+    .browse-bar { max-width: var(--max); margin: 0 auto; padding: 14px 24px; display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: none; }
+    .browse-bar::-webkit-scrollbar { display: none; }
+    .cat-btn { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border: 1px solid var(--border); border-radius: 3px; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+    .cat-btn:hover { border-color: var(--accent-lt); color: var(--accent); }
+    .cat-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .cat-btn svg { width: 13px; height: 13px; }
+    .browse-list { max-width: var(--max); margin: 0 auto; padding: 0 24px 48px; }
+    .browse-card { display: block; width: 100%; background: transparent; border: none; text-align: left; padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .browse-card:first-child { border-top: 1px solid var(--border); margin-top: 24px; }
+    .browse-card:hover .bc-inner { background: var(--bg-alt); margin: -12px; padding: 12px; }
+    .bc-inner { border-radius: 2px; transition: all .12s; }
+    .bc-player { font-family: var(--disp); font-size: 20px; margin-bottom: 3px; }
+    .bc-event { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; }
+    .bc-shot { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
+    .bc-note { font-family: var(--disp); font-size: 15px; color: var(--accent); }
+    .empty { text-align: center; padding: 64px 24px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+    /* Entry page */
+    .ep { max-width: var(--max); margin: 0 auto; padding: 28px 24px 64px; }
+    .back-btn { background: none; border: none; font-family: var(--mono); font-size: 11px; color: var(--muted); cursor: pointer; letter-spacing: .05em; text-transform: uppercase; padding: 0; margin-bottom: 28px; display: flex; align-items: center; gap: 5px; }
+    .back-btn:hover { color: var(--accent); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    /* Club hero */
+    .club-hero { background: var(--bg-alt); margin-bottom: 28px; }
+    .club-hero-placeholder { height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+    .club-hero-placeholder svg { color: var(--accent); opacity: .55; }
+    .club-hero-name { font-family: var(--disp); font-size: 22px; }
+    .club-hero-cat { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .club-hero-footer { font-family: var(--mono); font-size: 10px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--border); text-align: right; }
+    .club-hero-img { width: 100%; max-height: 380px; object-fit: contain; padding: 32px 40px 24px; display: block; mix-blend-mode: multiply; }
+
+    .ep-tier-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .ep-tier-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    .ep-tier-label { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    .ep-player { font-family: var(--disp); font-size: clamp(28px,5vw,42px); line-height: 1.05; margin-bottom: 6px; }
+    .ep-event { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 32px; }
+    .ep-sec { margin-bottom: 26px; }
+    .ep-sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-bottom: 7px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+    .ep-conditions { background: var(--bg-alt); padding: 14px 16px; font-family: var(--mono); font-size: 12px; color: var(--muted); line-height: 1.7; }
+    .ep-conditions .stakes { margin-top: 6px; color: var(--text); }
+    .ep-shot { font-size: 17px; line-height: 1.65; color: var(--text); }
+    .ep-gear-item { padding-left: 14px; border-left: 2px solid var(--border); margin-bottom: 14px; }
+    .ep-gear-cat { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+    .ep-gear-name { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
+    .ep-gear-note { font-size: 13px; color: var(--muted); }
+    .ep-gear-link { display: inline-block; margin-top: 5px; font-family: var(--mono); font-size: 11px; color: var(--accent); text-decoration: none; }
+    .ep-gear-link:hover { text-decoration: underline; }
+    .note-blk { background: var(--bg-alt); border-left: 3px solid var(--accent); padding: 18px 22px; }
+    .note-blk-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .note-blk-text { font-family: var(--disp); font-size: 22px; line-height: 1.45; }
+
+    /* My Bag — Edit Form */
+    .bag-section { max-width: var(--max); margin: 0 auto; padding: 28px 24px 48px; }
+    .bag-intro { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .bag-category-block { margin-bottom: 28px; }
+    .bag-cat-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 7px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+    .bag-cat-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .bag-add-btn { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; }
+    .bag-add-btn:hover { text-decoration: underline; }
+    .bag-club-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; }
+    .bag-club-row select, .bag-club-row input { font-family: var(--body); font-size: 13px; padding: 7px 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 2px; }
+    .bag-club-row select { min-width: 140px; }
+    .bag-club-row input { flex: 1; min-width: 0; }
+    .bag-club-row select:focus, .bag-club-row input:focus { outline: none; border-color: var(--accent); }
+    .bag-row-preview { display: none; align-items: center; gap: 12px; width: 100%; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; margin-top: 2px; }
+    .bag-row-preview.visible { display: flex; }
+    .bag-row-preview img { width: 72px; height: 72px; object-fit: contain; flex-shrink: 0; mix-blend-mode: multiply; }
+    .bag-row-preview-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+    .bag-remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 7px 4px; line-height: 1; }
+    .bag-remove-btn:hover { color: var(--text); }
+    .bag-save-bar { display: flex; gap: 12px; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .bag-save-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 8px 20px; background: var(--accent); color: #fff; border: none; cursor: pointer; border-radius: 2px; }
+    .bag-save-btn:hover { opacity: .85; }
+    .bag-clear-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0; }
+    .bag-clear-btn:hover { color: var(--text); }
+
+    /* My Bag — Hero Carousel */
+    .bag-hero { max-width: var(--max); margin: 0 auto; padding: 32px 24px 0; }
+    .bag-hero-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+    .bag-hero-title { font-family: var(--disp); font-size: 28px; }
+    .bag-edit-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; }
+    .bag-edit-link:hover { text-decoration: underline; }
+    .bag-hero-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; margin-bottom: 20px; }
+
+    /* Featured club — unified hero panel */
+    .bag-featured { display: flex; gap: 0; background: var(--bg-alt); margin-bottom: 1px; min-height: 260px; border-bottom: 1px solid var(--border); }
+    .bag-featured-img { flex: 0 0 55%; display: flex; align-items: center; justify-content: center; padding: 28px 16px 28px 28px; overflow: hidden; background: var(--bg-alt); }
+    .bag-featured-img img { max-width: 100%; max-height: 260px; object-fit: contain; mix-blend-mode: multiply; }
+    .bag-featured-img .bag-featured-icon { color: var(--accent); opacity: .25; }
+    .bag-featured-info { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 28px 28px 28px 12px; border-left: 1px solid var(--border); }
+    .bag-featured-cat { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .bag-featured-model { font-family: var(--disp); font-size: 28px; line-height: 1.1; margin-bottom: 4px; }
+    .bag-featured-brand { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .bag-featured-stats { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 2; }
+    .bag-featured-stats strong { color: var(--text); font-weight: 500; }
+    @media(max-width:520px) {
+      .bag-featured { flex-direction: column; min-height: auto; }
+      .bag-featured-img { flex: none; height: 200px; padding: 20px; border-left: none; border-bottom: 1px solid var(--border); }
+      .bag-featured-info { padding: 20px 24px; border-left: none; }
+    }
+
+    /* Carousel strip — thumbnail selectors below featured */
+    .bag-carousel { display: flex; gap: 1px; background: var(--border); overflow-x: auto; scrollbar-width: none; }
+    .bag-carousel::-webkit-scrollbar { display: none; }
+    .bag-club-card { background: var(--bg); padding: 10px 12px; min-width: 100px; flex: 1; cursor: pointer; text-align: center; transition: background .12s, opacity .12s; position: relative; opacity: .6; }
+    .bag-club-card:hover { opacity: .85; background: var(--bg-alt); }
+    .bag-club-card.active { background: var(--bg-alt); opacity: 1; }
+    .bag-club-card.active::after { content: ''; position: absolute; top: 0; left: 12px; right: 12px; height: 2px; background: var(--accent); }
+    .bag-club-img { width: 56px; height: 56px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; }
+    .bag-club-img img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+    .bag-club-model { font-family: var(--disp); font-size: 11px; line-height: 1.2; margin-bottom: 2px; }
+    .bag-club-brand { font-family: var(--mono); font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    @media(max-width:580px) {
+      .bag-club-card { min-width: 90px; flex: none; }
+    }
+
+    /* My Bag — Results */
+    .bag-results { max-width: var(--max); margin: 0 auto; padding: 24px 24px 48px; }
+    .bag-results-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+    .bag-active-club { font-family: var(--disp); font-size: 22px; }
+    .bag-filter-bar { display: flex; gap: 6px; }
+    .bag-filter-btn { padding: 5px 13px; border: 1px solid var(--border); border-radius: 20px; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: all .12s; }
+    .bag-filter-btn:hover { border-color: var(--accent-lt); color: var(--accent); }
+    .bag-filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Moment Cards — outcome-first layout */
+    .bag-moment { padding: 18px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: opacity .1s; }
+    .bag-moment:first-child { border-top: 1px solid var(--border); }
+    .bag-moment:hover { opacity: .8; }
+    .bag-moment-outcome { font-family: var(--disp); font-size: 19px; line-height: 1.3; margin-bottom: 6px; }
+    .bag-moment-meta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+    .bag-moment-player { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; font-weight: 500; color: var(--text); }
+    .bag-moment-event { font-family: var(--mono); font-size: 10px; letter-spacing: .04em; color: var(--muted); }
+    .bag-moment-club-tag { font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; }
+    .bag-moment-club-tag.exact { background: var(--accent); color: #fff; }
+    .bag-moment-club-tag.brand { background: var(--bg-alt); border: 1px solid var(--border); color: var(--accent); }
+    .bag-moment-club-tag.category { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .bag-moment-context { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .bag-moment-used { font-family: var(--mono); font-size: 10px; color: var(--accent); margin-top: 6px; }
+
+    .bag-tier-divider { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 24px 0 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+    .bag-empty-state { text-align: center; padding: 48px 0; color: var(--muted); }
+    .bag-empty-state p { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+
+    /* Add a Moment form */
+    .moment-form { max-width: var(--max); margin: 0 auto; padding: 28px 24px 48px; }
+    .moment-form-field { margin-bottom: 18px; }
+    .moment-form-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: block; }
+    .moment-form-input { width: 100%; font-family: var(--body); font-size: 14px; padding: 10px 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 2px; }
+    .moment-form-input:focus { outline: none; border-color: var(--accent); }
+    .moment-form-textarea { width: 100%; font-family: var(--body); font-size: 14px; padding: 10px 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 2px; min-height: 100px; resize: vertical; line-height: 1.6; }
+    .moment-form-textarea:focus { outline: none; border-color: var(--accent); }
+    .moment-form-club { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 2px; }
+    .moment-form-club-icon { color: var(--accent); }
+    .moment-form-club-name { font-family: var(--disp); font-size: 16px; }
+    .moment-form-club-cat { font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .moment-form-hint { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .moment-form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .moment-form-submit { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 24px; background: var(--accent); color: #fff; border: none; cursor: pointer; border-radius: 2px; }
+    .moment-form-submit:hover { opacity: .85; }
+    .moment-form-cancel { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; }
+    .moment-form-cancel:hover { color: var(--text); }
+
+    /* Most Lethal Clubs */
+    .lethal-section { max-width: var(--max); margin: 0 auto; padding: 36px 24px 40px; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .lethal-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); margin-top: 24px; }
+    .lethal-card { background: var(--bg); padding: 20px 18px; cursor: pointer; transition: background .12s; }
+    .lethal-card:hover { background: var(--bg-alt); }
+    .lethal-icon { color: var(--accent); opacity: .7; margin-bottom: 10px; }
+    .lethal-club { font-family: var(--disp); font-size: 17px; line-height: 1.2; margin-bottom: 4px; }
+    .lethal-player { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .lethal-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    @media(max-width:480px){ .lethal-grid { grid-template-columns: 1fr; } }
+
+    .footer-bar { max-width: var(--max); margin: 0 auto; padding: 28px 24px; text-align: center; }
+    .footer-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; }
+    .footer-btn:hover { color: var(--accent); }
+
+    @media(max-width:480px){
+      .hdr, .week-section, .home-section { padding-left: 16px; padding-right: 16px; }
+      .ep, .browse-list, .browse-bar { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ─── SVG Icons ───────────────────────────────────────────────────────────────
+const ICONS = {
+  back:   `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3L5 8L10 13"/></svg>`,
+  all:    `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="8" r="2.2"/><circle cx="11" cy="5" r="1.8"/><circle cx="11" cy="11" r="1.8"/></svg>`,
+  driver: `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 13.5L9 4"/><ellipse cx="11.5" cy="3" rx="2.8" ry="1.8" transform="rotate(-15 11.5 3)"/></svg>`,
+  irons:  `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 13L8 3"/><path d="M6.5 10.5L11 10.5L10.5 13L6 13Z"/></svg>`,
+  wedges: `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5.5 13L7.5 3.5"/><path d="M5.5 9L11 11L10.5 13L5.5 13Z"/></svg>`,
+  putter: `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2L8 11"/><rect x="4.5" y="11" width="7" height="2.5" rx="0.5"/></svg>`,
+  ball:   `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="4.5"/><path d="M4 6.5Q8 8 12 6.5" stroke-width="0.8"/><path d="M3.8 9.5Q8 8 12.2 9.5" stroke-width="0.8"/></svg>`,
+  bag:    `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5.5 5L5.5 13Q5.5 14 6.5 14L9.5 14Q10.5 14 10.5 13L10.5 5"/><path d="M4.5 5L11.5 5"/><path d="M6.5 5L6.5 3Q6.5 2 8 2Q9.5 2 9.5 3L9.5 5"/><path d="M7 9L9 9"/></svg>`,
+};
+function icon(name, size=13) {
+  return (ICONS[name]||ICONS.all).replace(/width="\d+"/, `width="${size}"`).replace(/height="\d+"/, `height="${size}"`);
+}
+
+// ─── Config ───────────────────────────────────────────────────────────────────
+const THIS_WEEK = {
+  label: "All Time",
+  entryIds: [
+    "jack-nicklaus--masters--1986",
+    "tiger-woods--masters--2019",
+    "john-daly--pga-championship--1991",
+    "rory-mcilroy--us-open--2011",
+    "francis-ouimet--us-open--1913",
+  ]
+};
+
+const CATEGORIES = [
+  {id:"all",label:"All"},{id:"driver",label:"Driver"},{id:"irons",label:"Irons"},
+  {id:"wedges",label:"Wedges"},{id:"putter",label:"Putter"},{id:"ball",label:"Ball"},{id:"bag",label:"Bag"},
+];
+const ERAS = [
+  {id:"hickory",  label:"Hickory",   dates:"pre-1931"},
+  {id:"persimmon",label:"Persimmon", dates:"1931–1991"},
+  {id:"modern",   label:"Modern",    dates:"1991–"},
+];
+
+// ─── Entries ──────────────────────────────────────────────────────────────────
+const ENTRIES = [
+  {
+    id:"francis-ouimet--us-open--1913", tier:"LANDMARK", rank:6, era:"hickory", lore:true,
+    gearCategories:["irons"],
+    player:{name:"Francis Ouimet", type:"amateur"},
+    event:{name:"1913 US Open", course:"The Country Club", date:"1913-09-20", round:"18-Hole Playoff"},
+    conditions:{weather:"Wet. Fog in the morning. Course soft from rain.", surface:"The Country Club, Brookline", stakes:"Playoff vs. Vardon and Ray — the two best players alive."},
+    gear:[{category:"irons", brand:"Tom Stewart", model:"Hickory-shaft", item:"Tom Stewart hickory-shaft clubs", note:"Made in St Andrews. Hickory, not steel — you felt every shot through the grain.", affiliateUrl:null, clubImageUrl:null, legendary:true}],
+    shot:"20-year-old caddie. 18-hole playoff against the two best players in the world. His caddie was 10 years old. He beat them both.",
+    note:"Nothing in the bag was remarkable. The round was.",
+    youtubeId:null
+  },
+  {
+    id:"arnold-palmer--us-open--1960", tier:"SIGNIFICANT", rank:4, era:"persimmon", lore:false,
+    gearCategories:["driver","irons"],
+    player:{name:"Arnold Palmer", type:"pro"},
+    event:{name:"1960 US Open", course:"Cherry Hills CC", date:"1960-06-18", round:"Final Round"},
+    conditions:{weather:"Hot. Thin Denver air. Ball carrying farther than anywhere.", surface:"Cherry Hills CC", stakes:"Seven shots back. A journalist told him at lunch he had no chance."},
+    gear:[
+      {category:"driver", brand:null, model:"Persimmon wood", item:"Persimmon wood driver", note:"Still locked in the Cherry Hills clubhouse. Drove it onto the 1st green through thin air.", affiliateUrl:null, clubImageUrl:null, legendary:true},
+      {category:"irons", brand:"Wilson", model:"Staff Dyna-Powered", item:"Wilson Staff Dyna-Powered irons", note:"The blade he used for 14 wins in two years. Heavy, honest, zero forgiveness.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"First shot of the final round, he drove the green on the downhill par-4 1st. Made birdie. Then five more in the first seven holes. Seven back to start, champion by the end.",
+    note:"He was angry at the guy who said he couldn't do it. That helped.",
+    youtubeId:null
+  },
+  {
+    id:"jack-nicklaus--masters--1986", tier:"LANDMARK", rank:1, era:"persimmon", lore:false,
+    gearCategories:["putter"],
+    player:{name:"Jack Nicklaus", type:"pro"},
+    event:{name:"1986 Masters", course:"Augusta National", date:"1986-04-13", round:"Final Round"},
+    conditions:{weather:"Clear. Augusta fast. Sunday back nine.", surface:"Augusta National", stakes:"46 years old. The press had already written his career obituary."},
+    gear:[{category:"putter", brand:"MacGregor", model:"Response ZT 615", item:"MacGregor Response ZT 615", note:"Aluminum. Painted black himself. Loaded with lead tape. When they showed it to him he said: \"Is this a joke?\" Nobody knows where it is now — a son gave it away.", affiliateUrl:null, clubImageUrl:null, legendary:true}],
+    shot:"Six birdies and an eagle on the back nine at 46. Made the 17th putt and pointed his putter at the sky. The crowd noise didn't stop for three holes.",
+    note:"He called the putter a joke. Then he won with it. Then he lost it.",
+    youtubeId:null
+  },
+  {
+    id:"john-daly--pga-championship--1991", tier:"LANDMARK", rank:3, era:"modern", lore:true,
+    gearCategories:["driver"],
+    player:{name:"John Daly", type:"pro"},
+    event:{name:"1991 PGA Championship", course:"Crooked Stick GC", date:"1991-08-11", round:"Final Round"},
+    conditions:{weather:"August heat. Humid. Course playing long.", surface:"Crooked Stick GC", stakes:"9th alternate. Got the call at midnight. Never walked the course."},
+    gear:[{category:"driver", brand:"Cobra", model:"Composite/Kevlar", item:"Cobra 44.5\" composite/kevlar driver", note:"White, plastic-looking head. Titanium shaft. His playing partner had never seen anything like it. 350 yards.", affiliateUrl:null, clubImageUrl:null, legendary:true}],
+    shot:"He didn't know the course. Didn't lay up. Hit it 350 yards to places Crooked Stick had never been hit from. Won by three. Nobody knew who he was Monday. Everybody did by Friday.",
+    note:"Hit it past everyone and waited for the course to catch up.",
+    youtubeId:null
+  },
+  {
+    id:"phil-mickelson--masters--2004", tier:"LANDMARK", rank:5, era:"modern", lore:false,
+    gearCategories:["putter"],
+    player:{name:"Phil Mickelson", type:"pro"},
+    event:{name:"2004 Masters", course:"Augusta National", date:"2004-04-11", round:"Final Round"},
+    conditions:{weather:"Warm. Augusta Sunday.", surface:"Augusta National — 18th green", stakes:"42 major starts without a win. One shot clear of Ernie Els."},
+    gear:[{category:"putter", brand:"Scotty Cameron", model:"Newport", item:"Titleist Scotty Cameron", note:"His last major with Titleist before switching to Callaway. One more putt with the clubs from 42 tries.", affiliateUrl:null, clubImageUrl:null}],
+    shot:"18-foot birdie on the 72nd hole. He pumped his fist before the ball dropped. Forty-two starts. Then this.",
+    note:"Knew it was going in before it went in.",
+    youtubeId:null
+  },
+  {
+    id:"tiger-woods--masters--2019", tier:"LANDMARK", rank:2, era:"modern", lore:false,
+    gearCategories:["putter","irons"],
+    player:{name:"Tiger Woods", type:"pro"},
+    event:{name:"2019 Masters", course:"Augusta National", date:"2019-04-14", round:"Final Round"},
+    conditions:{weather:"Firm. Pins tucked. Air heavy.", surface:"Augusta National", stakes:"Final round. Eleven years since his last major."},
+    gear:[
+      {category:"putter", brand:"Scotty Cameron", model:"Newport 2 GSS", item:"Scotty Cameron Newport 2 GSS", note:"Worn in. The one he trusts. Fourteen majors before 2019. One more after.", affiliateUrl:null, clubImageUrl:null, legendary:true},
+      {category:"irons", brand:"TaylorMade", model:"P7TW", item:"TaylorMade P7TW irons", note:"Built to his exact specs. Familiar, not forgiving.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"Hit his tee shot to the spine of 16 and watched it trickle to two feet. Played the center — didn't hunt the flag. Let the course close in on everyone else.",
+    note:"Played the center. Let everyone else lose.",
+    youtubeId:null
+  },
+  {
+    id:"rory-mcilroy--us-open--2011", tier:"SIGNIFICANT", rank:7, era:"modern", lore:false,
+    gearCategories:["driver","irons"],
+    player:{name:"Rory McIlroy", type:"pro"},
+    event:{name:"2011 US Open", course:"Congressional CC", date:"2011-06-19", round:"Final Round"},
+    conditions:{weather:"Warm. Congressional receptive.", surface:"Congressional CC", stakes:"Eight shots clear entering Sunday."},
+    gear:[
+      {category:"driver", brand:"TaylorMade", model:"R11", item:"TaylorMade R11 Driver", note:"Hit every fairway he needed. Not careful — dialed.", affiliateUrl:null, clubImageUrl:null},
+      {category:"irons", brand:"TaylorMade", model:"Tour Preferred MB", item:"TaylorMade Tour Preferred MB", note:"Blades. Pure contact all week.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"16-under, 8-shot win. Congressional bent toward him all week. He never pressed — just kept playing the next shot.",
+    note:"Some weeks the swing is so far ahead of the doubt there's nothing to manage.",
+    youtubeId:null
+  },
+  {
+    id:"amateur--local-course--2023-10-28", tier:"PERSONAL", rank:null, era:"modern", lore:true,
+    gearCategories:["wedges"],
+    player:{name:"Amateur", type:"amateur"},
+    event:{name:"Local Course — Late October", course:"Local Course", date:"2023-10-28", round:null},
+    conditions:{weather:"Cold hands. Wet fairways. Leaves everywhere.", surface:"Local municipal — soft all day", stakes:"Nothing formal. Just a day."},
+    gear:[{category:"wedges", brand:null, model:null, item:"Old wedges — grooves worn smooth", note:"Mixed range balls in the bag. Glove stiff by the turn.", affiliateUrl:null, clubImageUrl:null}],
+    shot:"Short par-4. Laid up instead of forcing driver. Wedge in from 80 yards. Two putts. Walked off thinking about nothing.",
+    note:"Stopped trying to prove something. Played the day he had.",
+    youtubeId:null
+  }
+];
+
+// ─── Club Database ───────────────────────────────────────────────────────────
+const CLUB_DB = {
+  "TaylorMade": {
+    driver: ["Qi35","Qi10","Qi10 MAX","Stealth 2","Stealth 2 Plus","SIM2","SIM2 MAX","R11","R7 Quad","BRNR Mini","300 Mini"],
+    irons: ["P7TW","P7MB","P7MC","P770","P790","RORS PROTO","Tour Preferred MB","Tour Preferred MC","Stealth","Qi"],
+    wedges: ["MG4","Hi-Toe 3","Hi-Toe RAW"],
+    putter: ["Spider Tour X","Spider Tour X3","Spider GT","Spider EX","TP Juno","TP Del Monte"],
+    "fairway-wood": ["Qi35","Qi10","Stealth 2","SIM2"],
+    hybrid: ["Qi35","Qi10","Stealth 2"]
+  },
+  "Callaway": {
+    driver: ["Elyte","Elyte Night Edition","Paradym Ai Smoke","Paradym","Rogue ST","Epic Speed","Quantum Triple Diamond","MAVRIK"],
+    irons: ["Apex Pro","Apex","Apex TCB","X Forged CB","Paradym Ai Smoke","Rogue ST"],
+    wedges: ["JAWS RAW","JAWS Full Toe","MD5"],
+    putter: ["Opus","Ai-One"],
+    "fairway-wood": ["Elyte","Elyte Titanium","Paradym Ai Smoke","Rogue ST"],
+    hybrid: ["Elyte","Paradym Ai Smoke","Apex"]
+  },
+  "Titleist": {
+    driver: ["GT1","GT2","GT3","GT4","TSR3","TSR2","TSR4","TSi3"],
+    irons: ["T100","T100S","T150","T200","T250","T250•U","T350","U•505","620 CB","620 MB","631.CY Prototype"],
+    wedges: ["Vokey SM11","Vokey SM10","Vokey SM9","Vokey WedgeWorks","T200","T150","T100"],
+    putter: [],
+    "fairway-wood": ["GT1 Fairway","GT2 Fairway","GT3 Fairway","TSR3","TSR2"],
+    hybrid: ["GT1 Hybrid","GT2 Hybrid","GT3 Hybrid","TSR3","TSR2"]
+  },
+  "Scotty Cameron": {
+    putter: ["Phantom 5","Phantom 5.2","Phantom 5.5","Phantom 7","Phantom 7.2","Phantom 7.5","Phantom 9R","Phantom 9.2R","Newport 2","Newport 2 GSS","Newport 2 GSS Tour Prototype","GoLo Tour Prototype","Super Select Newport 2","Phantom X","Special Select","Newport","Futura"]
+  },
+  "Mizuno": {
+    irons: ["JPX Hot Metal","JPX Hot Metal Pro","JPX 923 Forged","JPX 923 Tour","Pro 225","Pro 245","MP-20 MB","MP-20 MMC"],
+    wedges: ["T3","T24","T22","S23","S18"],
+    driver: ["ST-Z 230","ST-X 230","ST-G 220"],
+    "fairway-wood": ["ST-Z 230","ST-X 230"],
+    hybrid: ["CLK"]
+  },
+  "Ping": {
+    driver: ["G440 LST","G440 MAX","G440 SFT","G430 MAX","G430 LST","G425 MAX"],
+    irons: ["i530","i525","i230","i210","Blueprint","Blueprint T","S55","S59","Eye 2 BeCu"],
+    wedges: ["Glide 4.0","Glide Forged Pro"],
+    putter: ["PLD Oslo","PLD Anser","Fetch","Tyne 4","DS72","2021 Anser"],
+    "fairway-wood": ["G440 MAX","G430 MAX"],
+    hybrid: ["G440","G430"]
+  },
+  "Cobra": {
+    driver: ["OPTM Max-K","Darkspeed LS","Darkspeed MAX","Aerojet LS","LTDx","Composite/Kevlar"],
+    irons: ["King Forged TEC","King Forged TEC ONE","Darkspeed","RF Proto"],
+    wedges: ["King MIM","King Snakebite"],
+    putter: ["3D Printed Grandsport"],
+    "fairway-wood": ["Darkspeed","Aerojet","LTDx"],
+    hybrid: ["Darkspeed","Aerojet","LTDx"]
+  },
+  "Cleveland": {
+    wedges: ["RTX 6 ZipCore","RTX Full-Face 2","CBX4 ZipCore","CBX Full-Face 2","Smart Sole 4"],
+    driver: ["Launcher XL Halo"],
+    irons: ["Launcher XL Halo"]
+  },
+  "Srixon": {
+    driver: ["ZX5 MKII LS","ZX5 MKII","ZX7 MKII"],
+    irons: ["ZX5 MKII","ZX7 MKII","Z-Forged II"],
+    "fairway-wood": ["ZX MKII"],
+    hybrid: ["ZX MKII"]
+  },
+  "Odyssey": {
+    putter: ["Max Stripe","Ai-ONE","White Hot OG","Tri-Hot 5K","Eleven","2-Ball"]
+  },
+  "LAB Golf": {
+    putter: ["DF3","DF2.1","Mezz.1","Directed Force 2.1","Link.1"]
+  },
+  "Bettinardi": {
+    putter: ["BB1 Fitz Blade","BB1","Queen B","Studio Stock","DASS"]
+  },
+  "Takomo": {
+    irons: ["301CB","301MB","201","101T"]
+  },
+  "Krank": {
+    driver: ["Formula Fire LD","Formula 11 XX","Formula 11 Pro"]
+  },
+  "Avoda": {
+    irons: ["Prototype"]
+  }
+};
+const BRAND_LIST = Object.keys(CLUB_DB).sort();
+const BAG_CATEGORIES = [
+  {id:"driver", label:"Driver", defaultSlots:1},
+  {id:"fairway-wood", label:"Fairway Woods", defaultSlots:1},
+  {id:"hybrid", label:"Hybrids", defaultSlots:0},
+  {id:"irons", label:"Irons", defaultSlots:1},
+  {id:"wedges", label:"Wedges", defaultSlots:1},
+  {id:"putter", label:"Putter", defaultSlots:1}
+];
+
+// ─── Club Image Lookup ───────────────────────────────────────────────────────
+// Map of "brand|model" → image URL. Populated from media center downloads.
+// To add images: drop them in an /images folder or use direct CDN URLs from
+// brand media centers, then add entries here.
+const CLUB_IMAGES = {
+
+  // ── Titleist · Drivers ──
+  // Source: mediacenter.titleist.com/en-US/media_kits/
+  "Titleist|GT1":   "images/GT1 driver/Titleist GT1 Driver Address RGB C44021.jpg",
+  "Titleist|GT2":   "images/GT2 driver/Titleist GT2 Driver Address RGB F4ed37.jpg",
+  "Titleist|GT3":   "images/GT3 driver/Titleist GT3 Driver Address RGB 265e0b.jpg",
+  "Titleist|GT4":   "images/GT4 driver/Titleist GT4 Driver Catalog 01 RGB E89ed4.jpg",
+
+  // ── Titleist · Fairway Woods (same model names, different category in lookup) ──
+  // getClubImage is called with brand+model only, so fairway/hybrid share the driver key
+  // unless we override per-category — for now driver image covers all GT clubs
+  "Titleist|GT1 Fairway": "images/GT1 fairway/Titleist GT1 Fairway Address RGB Cde687.jpg",
+  "Titleist|GT2 Fairway": "images/GT2 fairway/Titleist GT2 Fairway Address RGB B228d8.jpg",
+  "Titleist|GT3 Fairway": "images/GT3 fairway/Titleist GT3 Fairway Address RGB 2424f6.jpg",
+  "Titleist|GT1 Hybrid":  "images/GT1 hybrid/Titleist GT1 Hybrid Address RGB 15b1c9.jpg",
+  "Titleist|GT2 Hybrid":  "images/GT2 hybrid/Titleist GT2 Hybrid Address RGB 15f164.jpg",
+  "Titleist|GT3 Hybrid":  "images/GT3 hybrid/Titleist GT3 Hybrid Address RGB 025e65.jpg",
+
+  // ── Titleist · Irons ──
+  "Titleist|T200":         "images/Titleist/titleist-t200-irons.jpg",
+  "Titleist|TSR2":         "images/Titleist/titleist-tsr2-driver.jpg",
+  "Titleist|TSR3":         "images/Titleist/titleist-tsr2-driver.jpg",
+  "Titleist|T100":         "images/T100/2025 Titleist T100 Catalog01 RGB 5d0b7c.jpg",
+  "Titleist|T100S":        "images/T100/2025 Titleist T100 Catalog01 RGB 5d0b7c.jpg",
+  "Titleist|T150":         "images/T150/2025 Titleist T150 Catalog01 RGB 172d50.jpg",
+  "Titleist|T250":         "images/T250/2025 Titleist T250 Catalog01 RGB B0d355.jpg",
+  "Titleist|T250•U":       "images/T250•U/2025 Titleist T250U Catalog01 RGB 7c627d.jpg",
+  "Titleist|T350":         "images/T350/2025 Titleist T350 Catalog01 RGB 4bb3b8.jpg",
+  "Titleist|U•505":        "images/U•505/2025 Titleist U505 Catalog01 RGB 6bc4a9.jpg",
+
+  // ── Titleist · Blade Irons ──
+  "Titleist|620 CB":       "images/620 CB/620 CB Catalog 1 RGB 222f14.jpg",
+  "Titleist|620 MB":       "images/620 MB/620 MB Catalog 1 RGB Cc36bf.jpg",
+
+  // ── Titleist · Wedges ──
+  "Titleist|Vokey SM11":       "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
+  "Titleist|Vokey SM10":       "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
+  "Titleist|Vokey SM9":        "images/Vokey Design SM11 wedges/New Titleist Vokey SM11 Wedges 001 B5c475.jpg",
+  "Titleist|Vokey WedgeWorks": "images/Vokey WedgeWorks grinds/TITLEIST VOKEY 18992 C67fbf.jpg",
+
+  // ── Scotty Cameron · Putters ──
+  // Source: mediacenter.titleist.com (Scotty Cameron section)
+  "Scotty Cameron|Phantom 5":        "images/Phantom 5, 5.2, 5.5, 5 OC/2026 SC Phantom 5 5.2 5.5 5OC Group Face Sole 1642 67630a.jpg",
+  "Scotty Cameron|Phantom 5.2":      "images/Phantom 5, 5.2, 5.5, 5 OC/2026 SC Phantom 5 5.2 5.5 5OC Group Face Sole 1642 67630a.jpg",
+  "Scotty Cameron|Phantom 5.5":      "images/Phantom 5, 5.2, 5.5, 5 OC/2026 SC Phantom 5 5.2 5.5 5OC Group Face Sole 1642 67630a.jpg",
+  "Scotty Cameron|Phantom 7":        "images/Phantom 7, 7.2, 7.5/2026 SC Phantom 7 Group 1401 1521ed.jpg",
+  "Scotty Cameron|Phantom 7.2":      "images/Phantom 7, 7.2, 7.5/2026 SC Phantom 7 Group 1401 1521ed.jpg",
+  "Scotty Cameron|Phantom 7.5":      "images/Phantom 7, 7.2, 7.5/2026 SC Phantom 7 Group 1401 1521ed.jpg",
+  "Scotty Cameron|Phantom 9R":       "images/Phantom 9R, 9.2R/2026 SC Phantom 9 Face 1194 Bd58fa.jpg",
+  "Scotty Cameron|Phantom 9.2R":     "images/Phantom 9R, 9.2R/2026 SC Phantom 9 Face 1194 Bd58fa.jpg",
+  "Scotty Cameron|Phantom X":              "images/Scotty Cameron/sc-phantom-x.webp",
+  "Scotty Cameron|Newport 2":              "images/Scotty Cameron/sc-newport-2.jpg",
+  "Scotty Cameron|Newport 2 GSS":          "images/Scotty Cameron/sc-newport-2.jpg",
+  "Scotty Cameron|Newport 2 GSS Tour Prototype": "images/Scotty Cameron/sc-newport-2.jpg",
+  "Scotty Cameron|Super Select Newport 2": "images/Scotty Cameron/sc-newport-2.jpg",
+
+  // ── TaylorMade ──
+  // Source: newsroom.taylormadegolf.com/en-US/
+  "TaylorMade|R11":               "images/TaylorMade/tm-r11-driver.jpg",
+  "TaylorMade|Tour Preferred MB": "images/TaylorMade/tm-tour-preferred-mb.jpg",
+  "TaylorMade|P7TW":              "images/TaylorMade/tm-p7tw-irons.jpg",
+  "TaylorMade|RORS PROTO":        "images/TaylorMade/tm-rors-proto-irons.webp",
+  // Still needed: Qi35 driver, Spider Tour X putter
+
+  // ── Callaway ──
+  // Source: callawaygolf.com/pages/media-assets
+  "Callaway|Elyte":               "images/Callaway/callaway-elyte-driver.jpg",
+  "Callaway|Apex Pro":            "images/Callaway/callaway-apex-pro-irons.webp",
+  "Callaway|JAWS RAW":            "images/Callaway/callaway-jaws-raw-wedge.jpg",
+
+  // ── Ping ──
+  // Source: ping.com/en-us/community/media-center
+  // "Ping|G440 LST":                "images/Ping/ping-g440-lst.jpg",
+  // "Ping|PLD Oslo":                "images/Ping/ping-pld-oslo.jpg",
+
+  // ── Cobra ──
+  // Source: cobragolf.com (press section)
+  // "Cobra|AEROJET LS":             "images/Cobra/cobra-aerojet-ls.jpg",
+
+  // ── Mizuno ──
+  // Source: press.mizunousa.com
+  // "Mizuno|JPX925 Tour":           "images/Mizuno/mizuno-jpx925-tour.jpg",
+
+  // ── Cleveland / Srixon ──
+  // Source: news.dunlopsports.com
+  // "Cleveland|RTX 6 ZipCore":      "images/Cleveland/cleveland-rtx6-zipcore.jpg",
+  // "Srixon|ZX7 Mk II":             "images/Srixon/srixon-zx7-mkii.jpg",
+
+  // ── Odyssey ──
+  // Source: callawaygolf.com/pages/media-assets (Odyssey is Callaway brand)
+  // "Odyssey|White Hot OG #7":      "images/Odyssey/odyssey-white-hot-og7.jpg",
+};
+
+function getClubImage(brand, model) {
+  return CLUB_IMAGES[`${brand}|${model}`] || null;
+}
+
+// ─── Bag Storage ─────────────────────────────────────────────────────────────
+function loadBag() {
+  try { return JSON.parse(localStorage.getItem('gearlog_mybag')) || []; }
+  catch { return []; }
+}
+function saveBag(bag) {
+  localStorage.setItem('gearlog_mybag', JSON.stringify(bag));
+}
+function hasBag() { return loadBag().length > 0; }
+
+// ─── Matching Engine ─────────────────────────────────────────────────────────
+function normalizeStr(s) { return (s||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+
+function matchBag(bag, filterMode) {
+  // Returns results grouped by user club
+  const results = [];
+  bag.forEach(club => {
+    const clubResult = {club, tiers:{exact:[], brand:[], category:[]}};
+    const cBrand = normalizeStr(club.brand);
+    const cModel = normalizeStr(club.model);
+    // Map bag categories to entry gearCategories
+    const catMatch = club.category === 'fairway-wood' ? 'driver' : club.category;
+
+    ENTRIES.forEach(entry => {
+      entry.gear.forEach(g => {
+        const gBrand = normalizeStr(g.brand);
+        const gModel = normalizeStr(g.model);
+        const gCat = g.category;
+        // Category must be relevant
+        const catRelevant = gCat === club.category || (club.category === 'fairway-wood' && gCat === 'driver') || (club.category === 'driver' && gCat === 'driver');
+        if (!catRelevant && !entry.gearCategories.includes(catMatch)) return;
+
+        if (cBrand && gBrand && cBrand === gBrand && cModel && gModel && gModel.includes(cModel)) {
+          if (!clubResult.tiers.exact.find(x=>x.id===entry.id))
+            clubResult.tiers.exact.push(entry);
+        } else if (cBrand && gBrand && cBrand === gBrand && catRelevant) {
+          if (!clubResult.tiers.brand.find(x=>x.id===entry.id) && !clubResult.tiers.exact.find(x=>x.id===entry.id))
+            clubResult.tiers.brand.push(entry);
+        } else if (catRelevant || entry.gearCategories.includes(catMatch)) {
+          if (!clubResult.tiers.category.find(x=>x.id===entry.id) && !clubResult.tiers.exact.find(x=>x.id===entry.id) && !clubResult.tiers.brand.find(x=>x.id===entry.id))
+            clubResult.tiers.category.push(entry);
+        }
+      });
+    });
+    results.push(clubResult);
+  });
+  return results;
+}
+
+// ─── State ────────────────────────────────────────────────────────────────────
+const state = { view:'home', entryId:null, browseCat:'all', browseCourse:'all', bagFilter:'brand', bagActiveClub:0 };
+
+function setState(updates) {
+  Object.assign(state, updates);
+  window.scrollTo(0, 0);
+  render();
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function yr(d) { return new Date(d+'T12:00:00').getFullYear(); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ─── Club Hero ────────────────────────────────────────────────────────────────
+function clubHeroHTML(entry) {
+  const g = entry.gear[0];
+  if (!g) return '';
+  // Check for image: first the entry's own clubImageUrl, then the CLUB_IMAGES lookup
+  const entryImg = g.clubImageUrl || getClubImage(g.brand, g.model);
+  const body = entryImg
+    ? `<img class="club-hero-img" src="${esc(entryImg)}" alt="${esc(g.item)}">`
+    : `<div class="club-hero-placeholder">
+        ${icon(g.category, 48)}
+        <div class="club-hero-name">${esc(g.item)}</div>
+        <div class="club-hero-cat">${esc(g.category)}</div>
+      </div>`;
+  return `<div class="club-hero">
+    ${body}
+
+  </div>`;
+}
+
+// ─── Views ────────────────────────────────────────────────────────────────────
+function headerHTML() {
+  return `<header class="hdr">
+    <div class="hdr-name" data-action="home">The Gear Log</div>
+    <nav class="hdr-nav">
+      <button class="hdr-link${state.view==='home'?' active':''}" data-action="home">Log</button>
+      <button class="hdr-link${state.view==='browse'?' active':''}" data-action="browse">By Club</button>
+      <button class="hdr-link${state.view==='mybag'||state.view==='mybag-edit'?' active':''}" data-action="mybag">My Bag</button>
+    </nav>
+  </header>`;
+}
+
+function thisWeekHTML() {
+  const entries = THIS_WEEK.entryIds
+    .map((id,i) => ({e:ENTRIES.find(x=>x.id===id), rank:i+1}))
+    .filter(x=>x.e);
+
+  const cards = entries.map(({e,rank}) => {
+    const cat = e.gear[0]?.category || 'all';
+    const imgUrl = e.gear[0]?.clubImageUrl || getClubImage(e.gear[0]?.brand, e.gear[0]?.model);
+    const img = imgUrl
+      ? `<img src="${esc(imgUrl)}" alt="${esc(e.gear[0]?.item || '')}">`
+      : icon(cat, 28);
+    const imgBoxClass = imgUrl ? 'hero-img-box has-img' : 'hero-img-box';
+    return `<div class="hero-card" data-entry="${e.id}">
+      <div class="${imgBoxClass}">${img}</div>
+      <div class="hero-card-body">
+        <div class="hero-rank">#${rank}</div>
+        <div class="hero-club">${esc(e.gear[0]?.item || '')}</div>
+        <div class="hero-player">${esc(e.player.name)}</div>
+        <div class="hero-event">${esc(e.event.name)}<br>${yr(e.event.date)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="hero-section">
+    <div class="hero-eyebrow">
+      <div class="hero-dot"></div>
+      <span class="hero-label">Top Shots</span>
+      <span class="hero-date">${THIS_WEEK.label}</span>
+    </div>
+    <div class="hero-grid">${cards}</div>
+  </div>`;
+}
+
+function coursesHTML() {
+  const proEntries = ENTRIES.filter(e=>e.tier!=='PERSONAL');
+  // Unique courses in order of first appearance
+  const courses = [...new Set(proEntries.map(e=>e.event.course))];
+  const active = state.browseCourse;
+
+  const chips = [
+    `<button class="course-chip${active==='all'?' active':''}" data-course="all">All</button>`,
+    ...courses.map(c =>
+      `<button class="course-chip${active===c?' active':''}" data-course="${esc(c)}">${esc(c)}</button>`)
+  ].join('');
+
+  const filtered = active==='all'
+    ? proEntries
+    : proEntries.filter(e=>e.event.course===active);
+
+  const rows = filtered.map(e=>`
+    <div class="course-row" data-entry="${e.id}">
+      <div>
+        <div class="course-row-player">${esc(e.player.name)}</div>
+        <div class="course-row-shot">${esc(e.shot.slice(0,65))}…</div>
+      </div>
+      <div class="course-row-event">${esc(e.event.name)}</div>
+    </div>`).join('');
+
+  return `<div class="home-section">
+    <div class="sec-eyebrow">Venue</div>
+    <div class="sec-title">The Courses</div>
+    <div class="course-chooser">${chips}</div>
+    <div>${rows}</div>
+  </div>`;
+}
+
+function loreHTML() {
+  const lore = ENTRIES.filter(e=>e.lore||e.player.type==='amateur');
+  return `<div class="home-section">
+    <div class="sec-eyebrow">Off the record</div>
+    <div class="sec-title">Legend &amp; Lore</div>
+    <p class="lore-desc">The unexpected. The 9th alternate. The caddie. The one nobody wrote about.</p>
+    <div class="lore-cards">
+      ${lore.map(e=>`
+        <button class="lore-card" data-entry="${e.id}">
+          <div class="lore-card-player">${esc(e.player.name)}</div>
+          <div class="lore-card-event">${esc(e.event.name)}${e.event.round?` — ${esc(e.event.round)}`:''}</div>
+          <div class="lore-card-shot">${esc(e.shot)}</div>
+          <div class="lore-card-note">"${esc(e.note)}"</div>
+        </button>`).join('')}
+    </div>
+  </div>`;
+}
+
+function eraHTML() {
+  const panels = ERAS.map(era=>{
+    const es = ENTRIES.filter(e=>e.era===era.id);
+    const entries = es.length===0
+      ? `<span style="font-family:var(--mono);font-size:11px;color:var(--muted)">No entries yet</span>`
+      : es.map(e=>`<button class="era-entry" data-entry="${e.id}">${esc(e.player.name)}</button>`).join('');
+    return `<div class="era-panel">
+      <div class="era-label">${era.label}</div>
+      <div class="era-dates">${era.dates}</div>
+      ${entries}
+    </div>`;
+  }).join('');
+  return `<div class="home-section">
+    <div class="sec-eyebrow">History</div>
+    <div class="sec-title">By Era</div>
+    <div class="era-grid">${panels}</div>
+  </div>`;
+}
+
+function lethalHTML() {
+  // Collect all gear items flagged legendary, paired with their entry
+  const items = [];
+  ENTRIES.forEach(e => {
+    e.gear.forEach(g => {
+      if (g.legendary) items.push({g, e});
+    });
+  });
+  if (items.length === 0) return '';
+
+  const cards = items.map(({g, e}) => `
+    <div class="lethal-card" data-entry="${e.id}">
+      <div class="lethal-icon">${icon(g.category, 28)}</div>
+      <div class="lethal-club">${esc(g.item)}</div>
+      <div class="lethal-player">${esc(e.player.name)} &nbsp;·&nbsp; ${esc(e.event.name)}</div>
+      <div class="lethal-note">${esc(g.note)}</div>
+    </div>`).join('');
+
+  return `<div class="lethal-section">
+    <div class="sec-eyebrow">All Time</div>
+    <div class="sec-title">Most Lethal Clubs</div>
+    <div class="lethal-grid">${cards}</div>
+  </div>`;
+}
+
+function clubsOf2026HTML() {
+  const SEASON_YEAR = 2026;
+  // Collect all gear items from 2026 entries, grouped by club model
+  const clubMap = {};
+  ENTRIES.filter(e => yr(e.event.date) === SEASON_YEAR && e.tier !== 'PERSONAL').forEach(e => {
+    e.gear.forEach(g => {
+      if (!clubMap[g.item]) clubMap[g.item] = { g, appearances: [] };
+      clubMap[g.item].appearances.push(e);
+    });
+  });
+  const clubs = Object.values(clubMap).sort((a,b) => b.appearances.length - a.appearances.length);
+  if (clubs.length === 0) return '';
+
+  const cards = clubs.map(({g, appearances}) => {
+    const countLabel = appearances.length > 1
+      ? `${appearances.length} moments this season`
+      : `${esc(appearances[0].event.name)}`;
+    const players = appearances.map(e => esc(e.player.name)).join(', ');
+    // clicking goes to the first entry that features this club
+    return `<div class="lethal-card" data-entry="${appearances[0].id}">
+      <div class="lethal-icon">${icon(g.category, 24)}</div>
+      <div class="lethal-club">${esc(g.item)}</div>
+      <div class="lethal-player">${players}</div>
+      <div class="lethal-note">${countLabel}</div>
+    </div>`;
+  }).join('');
+
+  return `<div class="lethal-section">
+    <div class="sec-eyebrow">Equipment</div>
+    <div class="sec-title">Clubs of ${SEASON_YEAR}</div>
+    <div class="lethal-grid">${cards}</div>
+  </div>`;
+}
+
+function homeHTML() {
+  return thisWeekHTML() + clubsOf2026HTML() + coursesHTML() +
+    `<div class="footer-bar"><button class="footer-btn" data-action="browse">Browse by club →</button></div>`;
+}
+
+function browseHTML() {
+  const cat = state.browseCat;
+  const catBtns = CATEGORIES.map(c=>`
+    <button class="cat-btn${cat===c.id?' active':''}" data-cat="${c.id}">
+      ${icon(c.id)} ${c.label}
+    </button>`).join('');
+
+  const visible = cat==='all' ? ENTRIES : ENTRIES.filter(e=>e.gearCategories.includes(cat));
+  const cards = visible.length===0
+    ? `<div class="empty">No entries for this category yet.</div>`
+    : visible.map(e=>`
+        <button class="browse-card" data-entry="${e.id}">
+          <div class="bc-inner">
+            <div class="bc-player">${esc(e.player.name)}</div>
+            <div class="bc-event">${esc(e.event.name)}${e.event.round?` — ${esc(e.event.round)}`:''}</div>
+            <div class="bc-shot">${esc(e.shot)}</div>
+            <div class="bc-note">"${esc(e.note)}"</div>
+          </div>
+        </button>`).join('');
+
+  return `<div class="browse-bar">${catBtns}</div>
+    <div class="browse-list">${cards}</div>
+    <div class="footer-bar"><button class="footer-btn" data-action="home">← Back to the log</button></div>`;
+}
+
+function entryHTML(entry) {
+  const eventLine = [entry.event.name, entry.event.round].filter(Boolean).join(' — ') + ' · ' + yr(entry.event.date);
+  const gearItems = entry.gear.map(g=>`
+    <div class="ep-gear-item">
+      <div class="ep-gear-cat">${esc(g.category)}</div>
+      <div class="ep-gear-name">${esc(g.item)}</div>
+      <div class="ep-gear-note">${esc(g.note)}</div>
+      ${g.affiliateUrl?`<a class="ep-gear-link" href="${esc(g.affiliateUrl)}" target="_blank" rel="noopener">Find this →</a>`:''}
+    </div>`).join('');
+
+  return `<div class="ep">
+    <button class="back-btn" data-action="back">${ICONS.back} Back</button>
+    ${clubHeroHTML(entry)}
+    <div class="ep-tier-row">
+      <div class="ep-tier-dot"></div>
+      <span class="ep-tier-label">${(()=>{const i=THIS_WEEK.entryIds.indexOf(entry.id);return entry.tier+(i>=0?` &nbsp;·&nbsp; #${i+1} This Week`:'')})()} </span>
+    </div>
+    <h1 class="ep-player">${esc(entry.player.name)}</h1>
+    <p class="ep-event">${esc(eventLine)}</p>
+    <div class="ep-sec">
+      <div class="ep-sec-label">Conditions</div>
+      <div class="ep-conditions">
+        <div>${esc(entry.conditions.weather)}</div>
+        ${entry.conditions.surface?`<div>${esc(entry.conditions.surface)}</div>`:''}
+        ${entry.conditions.stakes?`<div class="stakes">${esc(entry.conditions.stakes)}</div>`:''}
+      </div>
+    </div>
+    <div class="ep-sec">
+      <div class="ep-sec-label">The Shot</div>
+      <p class="ep-shot">${esc(entry.shot)}</p>
+    </div>
+    <div class="ep-sec">
+      <div class="ep-sec-label">What they used</div>
+      ${gearItems}
+    </div>
+    <div class="note-blk">
+      <div class="note-blk-label">The note</div>
+      <div class="note-blk-text">${esc(entry.note)}</div>
+    </div>
+  </div>`;
+}
+
+// ─── My Bag Views ────────────────────────────────────────────────────────────
+function modelsForBrand(brand, category) {
+  const b = CLUB_DB[brand];
+  if (!b) return [];
+  return b[category] || [];
+}
+
+function bagEditHTML() {
+  const bag = loadBag();
+  const catClubs = {};
+  BAG_CATEGORIES.forEach(c => { catClubs[c.id] = []; });
+  bag.forEach(club => {
+    if (catClubs[club.category]) catClubs[club.category].push(club);
+  });
+  BAG_CATEGORIES.forEach(c => {
+    if (catClubs[c.id].length === 0 && c.defaultSlots > 0) {
+      for (let i=0; i<c.defaultSlots; i++) catClubs[c.id].push({category:c.id, brand:'', model:''});
+    }
+  });
+
+  const sections = BAG_CATEGORIES.map(cat => {
+    const clubs = catClubs[cat.id];
+    const rows = clubs.map((club, i) => {
+      const models = modelsForBrand(club.brand, cat.id);
+      const brandOpts = BRAND_LIST.map(b=>`<option value="${esc(b)}"${club.brand===b?' selected':''}>${esc(b)}</option>`).join('');
+      const modelField = models.length > 0
+        ? `<select class="bag-model-sel" data-bag-cat="${cat.id}" data-bag-idx="${i}">
+            <option value="">Model...</option>
+            ${models.map(m=>`<option value="${esc(m)}"${club.model===m?' selected':''}>${esc(m)}</option>`).join('')}
+            <option value="__other"${club.model && !models.includes(club.model)?` selected`:``}>Other...</option>
+          </select>${club.model && !models.includes(club.model)?`<input class="bag-model-input bag-model-other" placeholder="Model..." value="${esc(club.model)}" data-bag-cat="${cat.id}" data-bag-idx="${i}">`:``}`
+        : `<input class="bag-model-input" placeholder="Model..." value="${esc(club.model||'')}" data-bag-cat="${cat.id}" data-bag-idx="${i}">`;
+
+      const existingImg = club.brand && club.model ? getClubImage(club.brand, club.model) : null;
+      const previewHTML = existingImg
+        ? `<div class="bag-row-preview visible" data-bag-preview="${cat.id}-${i}">
+            <img src="${esc(existingImg)}" alt="${esc(club.model)}">
+            <span class="bag-row-preview-label">${esc(club.brand)} ${esc(club.model)}</span>
+          </div>`
+        : `<div class="bag-row-preview" data-bag-preview="${cat.id}-${i}"></div>`;
+
+      return `<div class="bag-club-row" data-bag-cat="${cat.id}" data-bag-idx="${i}">
+        <select class="bag-brand-sel" data-bag-cat="${cat.id}" data-bag-idx="${i}">
+          <option value="">Brand...</option>
+          ${brandOpts}
+          <option value="__other">Other...</option>
+        </select>
+        ${modelField}
+        ${clubs.length > 1 || cat.defaultSlots === 0
+          ? `<button class="bag-remove-btn" data-bag-remove="${cat.id}-${i}">&times;</button>`
+          : `<button class="bag-remove-btn" style="visibility:hidden">&times;</button>`}
+        ${previewHTML}
+      </div>`;
+    }).join('');
+
+    return `<div class="bag-category-block">
+      <div class="bag-cat-header">
+        <span class="bag-cat-label">${icon(cat.id==='fairway-wood'?'driver':cat.id)} ${cat.label}</span>
+        <button class="bag-add-btn" data-bag-add="${cat.id}">+ Add</button>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+
+  return `<div class="bag-section">
+    <div class="sec-eyebrow">Your Equipment</div>
+    <div class="sec-title">Define Your Bag</div>
+    <p class="bag-intro">Enter what you carry. Brand and model — that's it. We'll show you what happened when those clubs showed up under pressure.</p>
+    ${sections}
+    <div class="bag-save-bar">
+      <button class="bag-save-btn" data-action="save-bag">Save Bag</button>
+      <button class="bag-clear-btn" data-action="clear-bag">Clear</button>
+      <span class="bag-saved-msg" id="bag-saved-msg">Saved</span>
+    </div>
+  </div>`;
+}
+
+function bagResultsHTML() {
+  const bag = loadBag();
+  const filter = state.bagFilter;
+  const activeIdx = Math.min(state.bagActiveClub, bag.length - 1);
+  const activeClub = bag[activeIdx];
+  const results = matchBag(bag, filter);
+  const activeResult = results[activeIdx];
+
+  // Featured club — large display
+  const featImg = getClubImage(activeClub.brand, activeClub.model);
+  const featCatIcon = activeClub.category === 'fairway-wood' ? 'driver' : activeClub.category;
+  const featImgHTML = featImg
+    ? `<img src="${esc(featImg)}" alt="${esc(activeClub.brand)} ${esc(activeClub.model)}">`
+    : `<div class="bag-featured-icon">${icon(featCatIcon, 64)}</div>`;
+
+  // Count matches for this club
+  const activeExact = activeResult ? activeResult.tiers.exact.length : 0;
+  const activeBrand = activeResult ? activeResult.tiers.brand.length : 0;
+  const totalMoments = activeExact + activeBrand;
+
+  const featuredHTML = `<div class="bag-featured">
+    <div class="bag-featured-img">${featImgHTML}</div>
+    <div class="bag-featured-info">
+      <div class="bag-featured-cat">${esc(activeClub.category.replace('-',' '))}</div>
+      <div class="bag-featured-model">${esc(activeClub.model)}</div>
+      <div class="bag-featured-brand">${esc(activeClub.brand)}</div>
+      <div class="bag-featured-stats">
+        ${activeExact > 0 ? `<div><strong>${activeExact}</strong> exact match${activeExact!==1?'es':''} on tour</div>` : ''}
+        ${activeBrand > 0 ? `<div><strong>${activeBrand}</strong> ${esc(activeClub.brand)} moment${activeBrand!==1?'s':''}</div>` : ''}
+        ${totalMoments === 0 ? `<div>No tour moments yet</div>` : ''}
+      </div>
+    </div>
+  </div>`;
+
+  // Thumbnail strip — all clubs in the bag
+  const carouselCards = bag.map((c, i) => {
+    const catIcon = c.category === 'fairway-wood' ? 'driver' : c.category;
+    const thumbImg = getClubImage(c.brand, c.model);
+    const thumbHTML = thumbImg
+      ? `<img src="${esc(thumbImg)}" alt="${esc(c.model)}">`
+      : icon(catIcon, 22);
+    return `<div class="bag-club-card${i===activeIdx?' active':''}" data-bag-club-idx="${i}">
+      <div class="bag-club-img">${thumbHTML}</div>
+      <div class="bag-club-model">${esc(c.model)}</div>
+      <div class="bag-club-brand">${esc(c.brand)}</div>
+    </div>`;
+  }).join('');
+
+  // Filter toggle — only Exact and Brand. No "All" — category-level matches
+  // under a specific club heading break the connection.
+  const filterBtns = ['exact','brand'].map(f =>
+    `<button class="bag-filter-btn${filter===f?' active':''}" data-bag-filter="${f}">${f==='exact'?'Exact Match':'Brand'}</button>`
+  ).join('');
+
+  // Build moment cards for the active club
+  let momentsHTML = '';
+  if (activeResult) {
+    const {tiers} = activeResult;
+
+    // Collect visible moments — only exact and brand tiers
+    const moments = [];
+    tiers.exact.forEach(e => moments.push({e, tier:'exact'}));
+    if (filter === 'brand') {
+      tiers.brand.forEach(e => moments.push({e, tier:'brand'}));
+    }
+
+    if (moments.length > 0) {
+      momentsHTML = moments.map(({e, tier}) => {
+        // Find which gear item in this entry matched
+        const matchedGear = e.gear.find(g => {
+          const gB = normalizeStr(g.brand), cB = normalizeStr(activeClub.brand);
+          const gM = normalizeStr(g.model), cM = normalizeStr(activeClub.model);
+          if (tier === 'exact') return gB === cB && gM && cM && gM.includes(cM);
+          if (tier === 'brand') return gB === cB;
+          return true;
+        }) || e.gear[0];
+
+        // Tier badge
+        const tierLabel = tier === 'exact' ? 'Your club'
+          : tier === 'brand' ? esc(activeClub.brand)
+          : esc(BAG_CATEGORIES.find(c=>c.id===activeClub.category)?.label || activeClub.category);
+
+        // "Used with" line — what specific club did the pro use
+        const usedLine = tier === 'exact'
+          ? `Used your ${esc(activeClub.brand)} ${esc(activeClub.model)}`
+          : `Used ${esc(matchedGear.item)}`;
+
+        // Extract a punchy outcome from the shot text (first sentence or first ~60 chars)
+        const shotText = e.shot || '';
+        const firstSentence = shotText.split(/\.\s/)[0] + (shotText.includes('.') ? '.' : '');
+        const outcome = firstSentence.length > 80 ? firstSentence.slice(0,77)+'...' : firstSentence;
+
+        // Context is the rest
+        const rest = shotText.slice(firstSentence.length).trim();
+        const context = rest.length > 140 ? rest.slice(0,137)+'...' : rest;
+
+        return `<div class="bag-moment" data-entry="${e.id}">
+          <div class="bag-moment-outcome">${esc(outcome)}</div>
+          <div class="bag-moment-meta">
+            <span class="bag-moment-player">${esc(e.player.name)}</span>
+            <span class="bag-moment-event">${esc(e.event.name)}${e.event.round?' — '+esc(e.event.round):''}</span>
+            <span class="bag-moment-club-tag ${tier}">${tierLabel}</span>
+          </div>
+          ${context ? `<div class="bag-moment-context">${esc(context)}</div>` : ''}
+          <div class="bag-moment-used">${usedLine}</div>
+        </div>`;
+      }).join('');
+    } else {
+      const clubName = `${esc(activeClub.brand)} ${esc(activeClub.model)}`;
+      const broaden = filter === 'exact'
+        ? `<button class="bag-filter-btn" data-bag-filter="brand" style="margin-top:12px;">See all ${esc(activeClub.brand)} moments</button>`
+        : '';
+      momentsHTML = `<div class="bag-empty-state">
+        <div style="margin-bottom:16px;">${icon(activeClub.category === 'fairway-wood' ? 'driver' : activeClub.category, 36)}</div>
+        <p>No ${filter==='exact' ? clubName : esc(activeClub.brand) + ' ' + esc(activeClub.category)} moments yet.</p>
+        ${broaden}
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+          <p style="margin-bottom:8px;">You play this club. What's the moment?</p>
+          <button class="bag-save-btn" data-action="add-moment" style="margin-top:6px;">Add a Moment</button>
+        </div>
+      </div>`;
+    }
+  }
+
+  return `<div class="bag-hero">
+    <div class="bag-hero-header">
+      <div class="bag-hero-title">My Bag</div>
+      <button class="bag-edit-link" data-action="mybag-edit">Edit Bag</button>
+    </div>
+    <div class="bag-hero-sub">${bag.length} club${bag.length!==1?'s':''} in your bag</div>
+    ${featuredHTML}
+    <div class="bag-carousel">${carouselCards}</div>
+  </div>
+  <div class="bag-results">
+    <div class="bag-results-header">
+      <div class="bag-active-club">${esc(activeClub.brand)} ${esc(activeClub.model)}</div>
+      <div class="bag-filter-bar">${filterBtns}</div>
+    </div>
+    ${momentsHTML}
+  </div>`;
+}
+
+function bagMomentCard(e, tier, activeClub) {
+  // kept as utility if needed
+  return '';
+}
+
+function addMomentHTML() {
+  const bag = loadBag();
+  const activeClub = bag[state.bagActiveClub] || bag[0];
+  if (!activeClub) return bagEditHTML();
+
+  const catIcon = activeClub.category === 'fairway-wood' ? 'driver' : activeClub.category;
+
+  return `<div class="moment-form">
+    <button class="back-btn" data-action="mybag">${ICONS.back} Back to My Bag</button>
+    <div class="sec-eyebrow" style="margin-top:16px;">New Moment</div>
+    <div class="sec-title">What happened with your ${esc(activeClub.model)}?</div>
+
+    <div class="moment-form-field">
+      <label class="moment-form-label">Club</label>
+      <div class="moment-form-club">
+        <div class="moment-form-club-icon">${icon(catIcon, 20)}</div>
+        <div>
+          <div class="moment-form-club-name">${esc(activeClub.brand)} ${esc(activeClub.model)}</div>
+          <div class="moment-form-club-cat">${esc(activeClub.category.replace('-',' '))}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moment-form-field">
+      <label class="moment-form-label">Course</label>
+      <input class="moment-form-input" id="moment-course" placeholder="Where did you play?">
+    </div>
+
+    <div class="moment-form-field">
+      <label class="moment-form-label">Date</label>
+      <input class="moment-form-input" id="moment-date" type="date" value="${new Date().toISOString().slice(0,10)}">
+    </div>
+
+    <div class="moment-form-field">
+      <label class="moment-form-label">What happened?</label>
+      <textarea class="moment-form-textarea" id="moment-shot" placeholder="The shot, the hole, the decision. What did you do with this club?"></textarea>
+      <div class="moment-form-hint">2-4 sentences. Be specific — the hole, the yardage, what you were thinking.</div>
+    </div>
+
+    <div class="moment-form-field">
+      <label class="moment-form-label">The note <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+      <input class="moment-form-input" id="moment-note" placeholder="What held. What mattered.">
+      <div class="moment-form-hint">One line. The feeling after the round.</div>
+    </div>
+
+    <div class="moment-form-actions">
+      <button class="moment-form-submit" data-action="submit-moment">Save Moment</button>
+      <button class="moment-form-cancel" data-action="mybag">Cancel</button>
+    </div>
+  </div>`;
+}
+
+function mybagHTML() {
+  if (state.view === 'add-moment') return addMomentHTML();
+  if (state.view === 'mybag-edit' || !hasBag()) return bagEditHTML();
+  return bagResultsHTML();
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  const entry = ENTRIES.find(e=>e.id===state.entryId);
+  let body = '';
+  if (state.view==='entry' && entry) body = entryHTML(entry);
+  else if (state.view==='mybag' || state.view==='mybag-edit' || state.view==='add-moment') body = mybagHTML();
+  else if (state.view==='browse') body = browseHTML();
+  else body = homeHTML();
+
+  document.getElementById('app').innerHTML = headerHTML() + body;
+  attachEvents();
+  attachBagEvents();
+}
+
+function attachEvents() {
+  document.querySelectorAll('[data-action]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const a = el.dataset.action;
+      if (a==='home')      setState({view:'home',   entryId:null});
+      if (a==='browse')    setState({view:'browse',  entryId:null});
+      if (a==='back')      setState({view:'home',   entryId:null});
+      if (a==='mybag')     setState({view:'mybag',   entryId:null});
+      if (a==='mybag-edit') setState({view:'mybag-edit', entryId:null});
+      if (a==='add-moment') setState({view:'add-moment', entryId:null});
+      if (a==='submit-moment') submitMoment();
+      if (a==='save-bag')  saveBagFromForm();
+      if (a==='clear-bag') { saveBag([]); setState({view:'mybag-edit'}); }
+    });
+  });
+  document.querySelectorAll('[data-entry]').forEach(el=>{
+    el.addEventListener('click', ()=>setState({view:'entry', entryId:el.dataset.entry}));
+  });
+  document.querySelectorAll('[data-cat]').forEach(el=>{
+    el.addEventListener('click', ()=>setState({browseCat:el.dataset.cat}));
+  });
+  document.querySelectorAll('[data-course]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const sy = window.scrollY;
+      state.browseCourse = el.dataset.course;
+      render();
+      window.scrollTo(0, sy);
+    });
+  });
+  document.querySelectorAll('[data-bag-filter]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      state.bagFilter = el.dataset.bagFilter;
+      render();
+    });
+  });
+  document.querySelectorAll('[data-bag-club-idx]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      state.bagActiveClub = parseInt(el.dataset.bagClubIdx);
+      render();
+    });
+  });
+}
+
+function updateRowPreview(el) {
+  const row = el.closest('.bag-club-row');
+  if (!row) return;
+  const cat = row.dataset.bagCat;
+  const idx = row.dataset.bagIdx;
+  const brand = row.querySelector('.bag-brand-sel')?.value || '';
+  const modelSel = row.querySelector('.bag-model-sel');
+  const modelInp = row.querySelector('.bag-model-other') || row.querySelector('.bag-model-input');
+  const model = (modelSel && modelSel.value && modelSel.value !== '__other')
+    ? modelSel.value
+    : (modelInp?.value || '');
+  const preview = row.querySelector(`[data-bag-preview="${cat}-${idx}"]`);
+  if (!preview) return;
+  const img = getClubImage(brand, model);
+  if (img && brand && model) {
+    preview.innerHTML = `<img src="${esc(img)}" alt="${esc(model)}"><span class="bag-row-preview-label">${esc(brand)} ${esc(model)}</span>`;
+    preview.classList.add('visible');
+  } else {
+    preview.innerHTML = '';
+    preview.classList.remove('visible');
+  }
+}
+
+function attachBagEvents() {
+  // Brand selector changes → re-render to update model options
+  document.querySelectorAll('.bag-brand-sel').forEach(sel=>{
+    sel.addEventListener('change', ()=>{
+      // Save current form state first, then re-render
+      saveBagFromFormSilent();
+      render();
+    });
+  });
+  // Model selector → "Other" triggers freeform; otherwise update live preview
+  document.querySelectorAll('.bag-model-sel').forEach(sel=>{
+    sel.addEventListener('change', ()=>{
+      if (sel.value === '__other') {
+        saveBagFromFormSilent();
+        render();
+      } else {
+        updateRowPreview(sel);
+      }
+    });
+  });
+
+  // Model text input → update preview on input
+  document.querySelectorAll('.bag-model-input').forEach(inp=>{
+    inp.addEventListener('input', ()=>{ updateRowPreview(inp); });
+  });
+  // Add club buttons
+  document.querySelectorAll('[data-bag-add]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const cat = btn.dataset.bagAdd;
+      const bag = readBagFromForm();
+      bag.push({category:cat, brand:'', model:''});
+      saveBag(bag);
+      render();
+    });
+  });
+  // Remove club buttons
+  document.querySelectorAll('[data-bag-remove]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const [cat, idx] = btn.dataset.bagRemove.split('-');
+      const bag = readBagFromForm();
+      // Find and remove the right one
+      let count = 0;
+      for (let i=0; i<bag.length; i++) {
+        if (bag[i].category === cat) {
+          if (count === parseInt(idx)) { bag.splice(i, 1); break; }
+          count++;
+        }
+      }
+      saveBag(bag);
+      render();
+    });
+  });
+}
+
+function readBagFromForm() {
+  const bag = [];
+  BAG_CATEGORIES.forEach(cat => {
+    const rows = document.querySelectorAll(`.bag-club-row[data-bag-cat="${cat.id}"]`);
+    rows.forEach(row => {
+      const brandSel = row.querySelector('.bag-brand-sel');
+      const modelSel = row.querySelector('.bag-model-sel');
+      const modelInput = row.querySelector('.bag-model-input');
+      const otherInput = row.querySelector('.bag-model-other');
+      let brand = brandSel?.value || '';
+      let model = '';
+      if (modelSel && modelSel.value && modelSel.value !== '__other') {
+        model = modelSel.value;
+      } else if (otherInput) {
+        model = otherInput.value;
+      } else if (modelInput) {
+        model = modelInput.value;
+      }
+      if (brand || model) {
+        bag.push({category: cat.id, brand, model});
+      }
+    });
+  });
+  return bag;
+}
+
+function saveBagFromForm() {
+  const bag = readBagFromForm().filter(c => c.brand && c.model);
+  saveBag(bag);
+  setState({view:'mybag'});
+}
+
+function saveBagFromFormSilent() {
+  const bag = readBagFromForm();
+  saveBag(bag);
+}
+
+// ─── Community Moments ───────────────────────────────────────────────────────
+function loadCommunityMoments() {
+  try { return JSON.parse(localStorage.getItem('gearlog_moments')) || []; }
+  catch { return []; }
+}
+function saveCommunityMoments(moments) {
+  localStorage.setItem('gearlog_moments', JSON.stringify(moments));
+}
+
+function submitMoment() {
+  const bag = loadBag();
+  const club = bag[state.bagActiveClub] || bag[0];
+  if (!club) return;
+
+  const course = document.getElementById('moment-course')?.value?.trim();
+  const date = document.getElementById('moment-date')?.value?.trim();
+  const shot = document.getElementById('moment-shot')?.value?.trim();
+  const note = document.getElementById('moment-note')?.value?.trim();
+
+  if (!shot) { alert('Tell us what happened!'); return; }
+
+  const id = `community--${(course||'unknown').toLowerCase().replace(/[^a-z0-9]+/g,'-')}--${date||'undated'}--${Date.now()}`;
+  const entry = {
+    id, tier:'PERSONAL', rank:null, era:'modern', lore:false,
+    gearCategories:[club.category === 'fairway-wood' ? 'driver' : club.category],
+    player:{name:'You', type:'amateur'},
+    event:{name:course||'Unknown Course', course:course||'Unknown', date:date||new Date().toISOString().slice(0,10), round:null},
+    conditions:{weather:'', surface:course||'', stakes:''},
+    gear:[{category:club.category, brand:club.brand, model:club.model, item:`${club.brand} ${club.model}`, note:'', affiliateUrl:null, clubImageUrl:null}],
+    shot: shot,
+    note: note || '',
+    community: true
+  };
+
+  // Add to community storage
+  const moments = loadCommunityMoments();
+  moments.unshift(entry);
+  saveCommunityMoments(moments);
+
+  // Also push into the live ENTRIES array so it shows up immediately
+  ENTRIES.push(entry);
+
+  setState({view:'mybag'});
+}
+
+// Load community moments into ENTRIES on boot
+(function() {
+  const moments = loadCommunityMoments();
+  moments.forEach(m => {
+    if (!ENTRIES.find(e => e.id === m.id)) ENTRIES.push(m);
+  });
+})();
+
+// ─── Boot ─────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>

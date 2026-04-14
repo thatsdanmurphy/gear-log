@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "the-gear-log",
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}

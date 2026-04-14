@@ -1,0 +1,273 @@
+[
+  {
+    "id": "francis-ouimet--us-open--1913",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": true,
+    "gearCategories": ["irons"],
+    "player": { "name": "Francis Ouimet", "slug": "francis-ouimet", "type": "amateur", "tour": null },
+    "event": {
+      "name": "1913 US Open", "slug": "1913-us-open", "date": "1913-09-20",
+      "round": "18-Hole Playoff", "eventType": "major",
+      "stakes": "Playoff against Vardon and Ray. A 20-year-old caddie-turned-amateur against the two best players in the world."
+    },
+    "conditions": {
+      "weather": "Wet. Fog in the morning. Rain had softened the course.",
+      "surface": "The Country Club, Brookline — short, tight, unforgiving"
+    },
+    "gear": [
+      {
+        "category": "irons",
+        "item": "Tom Stewart hickory-shaft clubs",
+        "note": "Made in St Andrews. The pipe trademark stamped on the back of each head. Hickory, not steel — you felt every shot through the wood grain. A mashie-niblick. A mid-iron. A niblick. Tools from another century already.",
+        "affiliateUrl": null
+      }
+    ],
+    "moment": "The 17th hole of the playoff. A 15-foot putt to go ahead of Vardon and Ray. His 10-year-old caddie Eddie Lowery told him before every putt that day: 'Keep your eye on the ball.'",
+    "note": "He was a caddie who became a champion. Nothing in the bag was remarkable. The round was.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "arnold-palmer--us-open--1960",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["driver", "irons"],
+    "player": { "name": "Arnold Palmer", "slug": "arnold-palmer", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "1960 US Open", "slug": "1960-us-open", "date": "1960-06-18",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "Seven shots back at the start of the round. A sportswriter told him at lunch he had no chance."
+    },
+    "conditions": {
+      "weather": "Hot. Thin Denver air. The ball carrying farther than anywhere else.",
+      "surface": "Cherry Hills CC — 346-yard downhill par-4 opening hole"
+    },
+    "gear": [
+      {
+        "category": "driver",
+        "item": "Persimmon wood driver",
+        "note": "The original is still locked in the Cherry Hills clubhouse. He drove it through the thin altitude air onto the first green — one hop through the rough, rolled to the putting surface.",
+        "affiliateUrl": null
+      },
+      {
+        "category": "irons",
+        "item": "Wilson Staff Model Dyna-Powered irons",
+        "note": "The blade that accounted for 14 wins in two years. Heavy, honest, no forgiveness built in. He'd used them since turning pro.",
+        "affiliateUrl": null
+      }
+    ],
+    "moment": "First hole, first shot of the final round. He drove the green on the par-4 1st. Made birdie. Then five more in the first seven holes. Seven back to start. Champion by the end.",
+    "note": "He was angry. That helped.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "jack-nicklaus--masters--1986",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": true,
+    "gearCategories": ["putter"],
+    "player": { "name": "Jack Nicklaus", "slug": "jack-nicklaus", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "1986 Masters", "slug": "1986-masters", "date": "1986-04-13",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "46 years old. The writers had already written the obituary for his career."
+    },
+    "conditions": {
+      "weather": "Clear. Augusta running fast. Sunday afternoon on the back nine.",
+      "surface": "Augusta National — firm, quick, no margin"
+    },
+    "gear": [
+      {
+        "category": "putter",
+        "item": "MacGregor Response ZT 615",
+        "note": "Aluminum head. He painted it black himself. Loaded the rear cavity with lead tape to give it feel. When his designer first showed it to him, Nicklaus asked: 'Is this a joke?' It wasn't. Nobody knows where it is now — one of his sons gave it away.",
+        "affiliateUrl": null
+      }
+    ],
+    "moment": "The back nine. 17th — a downhill left-to-lefter, made it. 18 — eagle attempt rolled to six feet, made birdie. Six birdies and an eagle from the 9th hole on. Final round 65.",
+    "note": "The putter was a joke until it wasn't. That's most of it.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "john-daly--pga-championship--1991",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["driver"],
+    "player": { "name": "John Daly", "slug": "john-daly", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "1991 PGA Championship", "slug": "1991-pga-championship", "date": "1991-08-11",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "The 9th alternate. Got the call at midnight. Never saw the course before the first tee Monday morning."
+    },
+    "conditions": {
+      "weather": "August heat in Indiana. Humid. Course playing long and tight.",
+      "surface": "Crooked Stick GC — narrow fairways, not built for what was about to happen"
+    },
+    "gear": [
+      {
+        "category": "driver",
+        "item": "Cobra 44.5\" composite/kevlar driver",
+        "note": "White, plastic-looking head. Titanium shaft. His playing partner Bob Lohr had never seen anything like it. It went places Crooked Stick had never been hit before.",
+        "affiliateUrl": null
+      }
+    ],
+    "moment": "Every tee box, all four days. He didn't lay up. He didn't know the course. He hit it 350 yards and figured out the rest from there. Won by three.",
+    "note": "The 9th alternate hit it past everyone and waited for the course to catch up.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "phil-mickelson--masters--2004",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["putter"],
+    "player": { "name": "Phil Mickelson", "slug": "phil-mickelson", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "2004 Masters", "slug": "2004-masters", "date": "2004-04-11",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "Forty-two professional major starts without a win. One shot ahead of Ernie Els on 18."
+    },
+    "conditions": {
+      "weather": "Warm. Sunday afternoon. Augusta moving fast.",
+      "surface": "Augusta National — 18th green, uphill, 18 feet"
+    },
+    "gear": [
+      {
+        "category": "putter",
+        "item": "Titleist (Scotty Cameron)",
+        "note": "His last major with Titleist before moving to Callaway. One last putt with the clubs he'd carried through forty-two attempts.",
+        "affiliateUrl": null,
+        "clubImageUrl": "images/Scotty Cameron/sc-newport-2.jpg"
+      }
+    ],
+    "moment": "18th green. An 18-foot birdie putt. The whole story of his career had been building to something exactly like this. He made it. Fist pump before it dropped.",
+    "note": "Forty-two starts without one. Then this.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "tiger-woods--masters--2019",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["putter", "irons"],
+    "player": { "name": "Tiger Woods", "slug": "tiger-woods", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "2019 Masters", "slug": "2019-masters", "date": "2019-04-14",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "Leading group. Final round. Eleven years since his last major."
+    },
+    "conditions": {
+      "weather": "Firm greens. Pins tucked. Air heavy.",
+      "surface": "Augusta National — firm and fast"
+    },
+    "gear": [
+      {
+        "category": "putter",
+        "item": "Scotty Cameron Newport 2 GSS",
+        "note": "Worn in. Not the newest version. The one he trusts.",
+        "affiliateUrl": null,
+        "clubImageUrl": "images/Scotty Cameron/sc-newport-2.jpg"
+      },
+      {
+        "category": "irons",
+        "item": "TaylorMade P7TW irons",
+        "note": "Built to his exact specs — offset, trajectory, tungsten placement. Familiar, not forgiving. Kept the ball down.",
+        "affiliateUrl": null,
+        "clubImageUrl": "images/TaylorMade/tm-p7tw-irons.jpg"
+      }
+    ],
+    "moment": "16 — center of the green. No flag hunting. Let the course take the others.",
+    "note": "Didn't chase it. Played what he could hold.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "rory-mcilroy--us-open--2011",
+    "tier": "LANDMARK",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["driver", "irons"],
+    "player": { "name": "Rory McIlroy", "slug": "rory-mcilroy", "type": "pro", "tour": "PGA Tour" },
+    "event": {
+      "name": "2011 US Open", "slug": "2011-us-open", "date": "2011-06-19",
+      "round": "Final Round", "eventType": "major",
+      "stakes": "Eight shots clear. Record on the table."
+    },
+    "conditions": {
+      "weather": "Warm. Congressional receptive. Conditions giving.",
+      "surface": "Congressional CC — set up for scoring"
+    },
+    "gear": [
+      {
+        "category": "driver",
+        "item": "TaylorMade R11 Driver",
+        "note": "Hit every fairway he needed. Not because he was careful — because he was dialed.",
+        "affiliateUrl": null,
+        "clubImageUrl": "images/TaylorMade/tm-r11-driver.jpg"
+      },
+      {
+        "category": "irons",
+        "item": "TaylorMade Tour Preferred MB",
+        "note": "Blades. Pure contact all week. He didn't need forgiveness.",
+        "affiliateUrl": null,
+        "clubImageUrl": "images/TaylorMade/tm-tour-preferred-mb.jpg"
+      }
+    ],
+    "moment": "The whole week, really. Congressional bent toward him. He didn't press — just kept playing the shot in front of him. Finished at 16-under. Eight clear.",
+    "note": "Some weeks the swing is so far ahead of the doubt that there's nothing to manage.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  },
+  {
+    "id": "amateur--local-course--2023-10-28",
+    "tier": "PERSONAL",
+    "sport": "golf",
+    "status": "published",
+    "publishedAt": "2026-03-20",
+    "featured": false,
+    "gearCategories": ["wedges"],
+    "player": { "name": "Amateur", "slug": "amateur", "type": "amateur", "tour": null },
+    "event": {
+      "name": "Local Course — Late October", "slug": "local-course-oct-2023",
+      "date": "2023-10-28", "round": null, "eventType": "amateur",
+      "stakes": "Nothing formal. Just a day."
+    },
+    "conditions": {
+      "weather": "Cold hands. Wet fairways. Leaves everywhere.",
+      "surface": "Local municipal — soft all day"
+    },
+    "gear": [
+      {
+        "category": "wedges",
+        "item": "Old wedges — grooves worn smooth",
+        "note": "Mixed range balls in the bag. Glove stiff by the turn. Didn't matter.",
+        "affiliateUrl": null
+      }
+    ],
+    "moment": "Short par 4 — laid up instead of forcing driver. Wedge in. Two putts.",
+    "note": "Stopped trying to prove something. Played the day he had.",
+    "holeMap": null,
+    "shotLog": [], "internalNotes": null
+  }
+]
