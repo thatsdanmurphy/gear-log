@@ -308,13 +308,13 @@ function icon(name, size=13) {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const THIS_WEEK = {
-  label: "Masters Week",
+  label: "2026 Masters",
   entryIds: [
     "rory-mcilroy--masters--2026",
-    "tiger-woods--masters--2019",
+    "scottie-scheffler--masters--2026",
+    "cameron-young--masters--2026",
+    "tyrrell-hatton--masters--2026",
     "jack-nicklaus--masters--1986",
-    "phil-mickelson--masters--2004",
-    "rory-mcilroy--us-open--2011",
   ]
 };
 
@@ -432,6 +432,49 @@ const ENTRIES = [
     youtubeId:null
   },
   {
+    id:"scottie-scheffler--masters--2026", tier:"SIGNIFICANT", rank:4, era:"modern", lore:false,
+    gearCategories:["irons","putter"],
+    player:{name:"Scottie Scheffler", type:"pro"},
+    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    conditions:{weather:"Firm and fast Augusta Sunday.", surface:"Augusta National.", stakes:"World No. 1 hunting a Masters title."},
+    gear:[
+      {category:"irons", brand:"TaylorMade", model:"P7TW", item:"TaylorMade P7TW irons", note:"5-iron through PW. Tiger's model. Dynamic Gold Tour Issue X100. No margin for error — and he never needed any.", affiliateUrl:null, clubImageUrl:null},
+      {category:"putter", brand:"TaylorMade", model:"Spider Tour X", item:"TaylorMade Spider Tour X", note:"L-Neck hosel. Every win since March 2024 — 16 of them — with this exact putter.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"Shot 68 in the final round. Zero bogeys in his final 36 holes — first player to do that at Augusta since 1942. Lost by one.",
+    note:"The most boring word in golf is 'bogey-free.' Not here.",
+    youtubeId:null
+  },
+  {
+    id:"cameron-young--masters--2026", tier:"SIGNIFICANT", rank:5, era:"modern", lore:false,
+    gearCategories:["driver","irons","putter"],
+    player:{name:"Cameron Young", type:"pro"},
+    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    conditions:{weather:"Augusta Sunday. High pressure.", surface:"Augusta National — greens running fast.", stakes:"Starting the day tied for the lead."},
+    gear:[
+      {category:"driver", brand:"Titleist", model:"GT3", item:"Titleist GT3 Driver", note:"11°. Diamana PD 60g TX. The club he trusted all week. Started Sunday tied for the lead.", affiliateUrl:null, clubImageUrl:null},
+      {category:"putter", brand:"Scotty Cameron", model:"Phantom 9R", item:"Scotty Cameron Phantom 9.5R Tour Prototype", note:"Tour prototype. Custom grind. On 16, a lip-out that would have changed everything.", affiliateUrl:null, clubImageUrl:null},
+      {category:"irons", brand:"Titleist", model:"620 MB", item:"631.CY MB Prototype irons", note:"Custom Titleist blade — 620 MB chassis, pre-worn leading edge, slightly wider sole. His own spec.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"Shot a 65 Saturday — co-low of the tournament. Sunday on 16, a lip-out. Would have put him two back with two to play. It stayed out.",
+    note:"One roll either way.",
+    youtubeId:null
+  },
+  {
+    id:"tyrrell-hatton--masters--2026", tier:"SIGNIFICANT", rank:6, era:"modern", lore:false,
+    gearCategories:["irons","driver"],
+    player:{name:"Tyrrell Hatton", type:"pro"},
+    event:{name:"2026 Masters", course:"Augusta National Golf Club", date:"2026-04-12", round:"Final Round"},
+    conditions:{weather:"Augusta Sunday.", surface:"Augusta National.", stakes:"T3 in a major for the first time."},
+    gear:[
+      {category:"irons", brand:"Ping", model:"Blueprint S", item:"Ping Blueprint S irons", note:"7-iron through PW. Nippon Modus3 Tour 120 X. Hit all 18 greens in regulation — first player to do it at Augusta since 2020.", affiliateUrl:null, clubImageUrl:null},
+      {category:"driver", brand:"Ping", model:"G440 LST", item:"Ping G440 LST Driver", note:"Low spin tech. Controlled off the tee all week.", affiliateUrl:null, clubImageUrl:null}
+    ],
+    shot:"Shot 66 Sunday. Hit all 18 greens in regulation — first player to do so at Augusta since 2020. Finished T3.",
+    note:"18 greens at Augusta. Some players don't hit 18 greens in a week.",
+    youtubeId:null
+  },
+  {
     id:"amateur--local-course--2023-10-28", tier:"PERSONAL", rank:null, era:"modern", lore:true,
     gearCategories:["wedges"],
     player:{name:"Amateur", type:"amateur"},
@@ -482,7 +525,7 @@ const CLUB_DB = {
   },
   "Ping": {
     driver: ["G440 LST","G440 MAX","G440 SFT","G430 MAX","G430 LST","G425 MAX"],
-    irons: ["i530","i525","i230","i210","Blueprint","Blueprint T","S55","S59","Eye 2 BeCu"],
+    irons: ["i530","i525","i240","i230","i210","Blueprint S","Blueprint","Blueprint T","S55","S59","Eye 2 BeCu"],
     wedges: ["Glide 4.0","Glide Forged Pro"],
     putter: ["PLD Oslo","PLD Anser","Fetch","Tyne 4","DS72","2021 Anser"],
     "fairway-wood": ["G440 MAX","G430 MAX"],
