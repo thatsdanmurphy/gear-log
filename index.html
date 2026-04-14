@@ -62,7 +62,8 @@
     /* Home sections */
     .home-section { max-width: var(--max); margin: 0 auto; padding: 36px 24px 40px; border-bottom: 1px solid var(--border); }
     .sec-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-    .sec-title { font-family: var(--disp); font-size: 22px; margin-bottom: 24px; }
+    .sec-title { font-family: var(--disp); font-size: 22px; margin-bottom: 8px; }
+    .sec-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; max-width: 480px; }
 
     /* Courses */
     .course-group { margin-bottom: 24px; }
@@ -113,10 +114,12 @@
     .browse-card:first-child { border-top: 1px solid var(--border); margin-top: 24px; }
     .browse-card:hover .bc-inner { background: var(--bg-alt); margin: -12px; padding: 12px; }
     .bc-inner { border-radius: 2px; transition: all .12s; }
-    .bc-player { font-family: var(--disp); font-size: 20px; margin-bottom: 3px; }
+    .bc-club { font-family: var(--disp); font-size: 20px; margin-bottom: 3px; }
+    .bc-player { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
     .bc-event { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; }
     .bc-shot { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
     .bc-note { font-family: var(--disp); font-size: 15px; color: var(--accent); }
+    .course-chip .course-count { opacity: .55; margin-left: 3px; }
     .empty { text-align: center; padding: 64px 24px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
     /* Entry page */
@@ -836,24 +839,37 @@ function thisWeekHTML() {
       <span class="hero-date">${THIS_WEEK.label}</span>
     </div>
     <div class="hero-grid">${cards}</div>
+    <p class="sec-desc" style="padding: 0 4px; margin-top: 14px;">Editorially selected — the shots, clubs, and moments that define a week, a season, or a career. Updated as the log grows.</p>
   </div>`;
 }
 
 function coursesHTML() {
-  const proEntries = ENTRIES.filter(e=>e.tier!=='PERSONAL');
-  // Unique courses in order of first appearance
-  const courses = [...new Set(proEntries.map(e=>e.event.course))];
+  // Include all entries — pro and amateur — that have a real named course
+  const allEntries = ENTRIES.filter(e => e.event.course && e.event.course !== 'Local Course');
+
+  // Group by course and count moments
+  const courseMap = {};
+  allEntries.forEach(e => {
+    const c = e.event.course;
+    if (!courseMap[c]) courseMap[c] = [];
+    courseMap[c].push(e);
+  });
+
+  // Sort courses by moment count descending (heat map order)
+  const sortedCourses = Object.entries(courseMap)
+    .sort((a,b) => b[1].length - a[1].length);
+
   const active = state.browseCourse;
 
   const chips = [
     `<button class="course-chip${active==='all'?' active':''}" data-course="all">All</button>`,
-    ...courses.map(c =>
-      `<button class="course-chip${active===c?' active':''}" data-course="${esc(c)}">${esc(c)}</button>`)
+    ...sortedCourses.map(([c, entries]) =>
+      `<button class="course-chip${active===c?' active':''}" data-course="${esc(c)}">${esc(c)}<span class="course-count">${entries.length}</span></button>`)
   ].join('');
 
   const filtered = active==='all'
-    ? proEntries
-    : proEntries.filter(e=>e.event.course===active);
+    ? allEntries
+    : (courseMap[active] || []);
 
   const rows = filtered.map(e=>`
     <div class="course-row" data-entry="${e.id}">
@@ -867,6 +883,7 @@ function coursesHTML() {
   return `<div class="home-section">
     <div class="sec-eyebrow">Venue</div>
     <div class="sec-title">The Courses</div>
+    <p class="sec-desc">Ranked by moments logged — pro and amateur. The more the log fills in, the more the heat map takes shape.</p>
     <div class="course-chooser">${chips}</div>
     <div>${rows}</div>
   </div>`;
@@ -944,26 +961,26 @@ function clubsOf2026HTML() {
       clubMap[g.item].appearances.push(e);
     });
   });
-  const clubs = Object.values(clubMap).sort((a,b) => b.appearances.length - a.appearances.length);
+  // Only show clubs that appear in 2+ moments
+  const clubs = Object.values(clubMap)
+    .filter(({appearances}) => appearances.length >= 2)
+    .sort((a,b) => b.appearances.length - a.appearances.length);
   if (clubs.length === 0) return '';
 
   const cards = clubs.map(({g, appearances}) => {
-    const countLabel = appearances.length > 1
-      ? `${appearances.length} moments this season`
-      : `${esc(appearances[0].event.name)}`;
     const players = appearances.map(e => esc(e.player.name)).join(', ');
-    // clicking goes to the first entry that features this club
     return `<div class="lethal-card" data-entry="${appearances[0].id}">
       <div class="lethal-icon">${icon(g.category, 24)}</div>
       <div class="lethal-club">${esc(g.item)}</div>
       <div class="lethal-player">${players}</div>
-      <div class="lethal-note">${countLabel}</div>
+      <div class="lethal-note">${appearances.length} moments this season</div>
     </div>`;
   }).join('');
 
   return `<div class="lethal-section">
     <div class="sec-eyebrow">Equipment</div>
     <div class="sec-title">Clubs of ${SEASON_YEAR}</div>
+    <p class="sec-desc">Clubs that appear in two or more logged moments this season. Updated as the tour plays on.</p>
     <div class="lethal-grid">${cards}</div>
   </div>`;
 }
@@ -980,18 +997,26 @@ function browseHTML() {
       ${icon(c.id)} ${c.label}
     </button>`).join('');
 
-  const visible = cat==='all' ? ENTRIES : ENTRIES.filter(e=>e.gearCategories.includes(cat));
+  const visible = (cat==='all' ? ENTRIES : ENTRIES.filter(e=>e.gearCategories.includes(cat)))
+    .filter(e => e.gear.some(g => g.brand && g.model)); // strip null-gear entries
   const cards = visible.length===0
     ? `<div class="empty">No entries for this category yet.</div>`
-    : visible.map(e=>`
-        <button class="browse-card" data-entry="${e.id}">
+    : visible.map(e=>{
+        // Use the gear item matching the selected category, or fall back to first
+        const primaryGear = cat !== 'all'
+          ? (e.gear.find(g => g.category === cat) || e.gear[0])
+          : e.gear[0];
+        const clubName = primaryGear?.item || [primaryGear?.brand, primaryGear?.model].filter(Boolean).join(' ') || '—';
+        return `<button class="browse-card" data-entry="${e.id}">
           <div class="bc-inner">
+            <div class="bc-club">${esc(clubName)}</div>
             <div class="bc-player">${esc(e.player.name)}</div>
             <div class="bc-event">${esc(e.event.name)}${e.event.round?` — ${esc(e.event.round)}`:''}</div>
             <div class="bc-shot">${esc(e.shot)}</div>
             <div class="bc-note">"${esc(e.note)}"</div>
           </div>
-        </button>`).join('');
+        </button>`;
+      }).join('');
 
   return `<div class="browse-bar">${catBtns}</div>
     <div class="browse-list">${cards}</div>
