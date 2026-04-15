@@ -59,9 +59,9 @@
     .hero-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); }
     .hero-card { background: var(--bg-alt); cursor: pointer; display: flex; flex-direction: column; text-align: center; transition: background .12s; overflow: hidden; }
     .hero-card:hover { background: var(--bg); }
-    .hero-img-box { width: 100%; aspect-ratio: 4/3; flex-shrink: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; opacity: .7; overflow: hidden; }
-    .hero-img-box.has-img { background: var(--bg); opacity: 1; }
-    .hero-img-box.has-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; padding: 20px 16px; filter: grayscale(1); transition: filter .3s; }
+    .hero-img-box { width: 100%; aspect-ratio: 4/3; flex-shrink: 0; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; opacity: .7; overflow: hidden; }
+    .hero-img-box.has-img { background: var(--bg-alt); opacity: 1; }
+    .hero-img-box.has-img img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: grayscale(1); transition: filter .3s; }
     .hero-card:hover .hero-img-box.has-img img { filter: grayscale(0); }
     .hero-card-body { padding: 12px 12px 16px; display: flex; flex-direction: column; align-items: center; flex: 1; }
     .hero-rank { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--accent); align-self: flex-start; margin-bottom: 8px; }
@@ -71,7 +71,7 @@
     @media(max-width: 580px) {
       .hero-grid { grid-template-columns: 1fr; }
       .hero-card { flex-direction: row; text-align: left; }
-      .hero-img-box { width: 90px; height: 90px; flex-shrink: 0; }
+      .hero-img-box { width: 110px; height: 110px; aspect-ratio: unset; flex-shrink: 0; }
       .hero-card-body { padding: 14px 16px; align-items: flex-start; }
       .hero-rank { margin-bottom: 2px; }
     }
@@ -244,10 +244,8 @@
     }
 
     /* Carousel strip — thumbnail selectors below featured */
-    .bag-carousel { display: flex; gap: 0; background: var(--border); overflow-x: auto; scrollbar-width: none; }
+    .bag-carousel { display: flex; gap: 1px; background: var(--border); overflow-x: auto; scrollbar-width: none; }
     .bag-carousel::-webkit-scrollbar { display: none; }
-    .bag-cat-group { display: flex; gap: 1px; background: var(--border); flex-shrink: 0; }
-    .bag-cat-group-label { background: var(--bg-alt); display: flex; align-items: flex-end; padding: 0 8px 8px; font-family: var(--mono); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; writing-mode: vertical-lr; transform: rotate(180deg); flex-shrink: 0; }
     .bag-club-card { background: var(--bg); padding: 10px 12px; min-width: 100px; flex: 1; cursor: pointer; text-align: center; transition: background .12s, opacity .12s; position: relative; opacity: .6; }
     .bag-club-card:hover { opacity: .85; background: var(--bg-alt); }
     .bag-club-card.active { background: var(--bg-alt); opacity: 1; }
@@ -256,6 +254,7 @@
     .bag-club-img img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(1); }
     .bag-club-model { font-family: var(--disp); font-size: 11px; line-height: 1.2; margin-bottom: 2px; }
     .bag-club-brand { font-family: var(--mono); font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .bag-club-cat { font-family: var(--mono); font-size: 7px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); opacity: .6; margin-top: 2px; }
     @media(max-width:580px) {
       .bag-club-card { min-width: 90px; flex: none; }
     }
@@ -1017,9 +1016,9 @@ function clubsOf2026HTML() {
   });
   // Add ghost placeholder for odd count so grid doesn't leave a half-row
   if (cardItems.length % 2 !== 0) {
-    cardItems.push(`<div class="lethal-card" style="background:var(--bg-alt);opacity:.4;cursor:default;pointer-events:none;">
-      <div class="lethal-icon" style="opacity:.3;">${icon('all',24)}</div>
-      <div class="lethal-club" style="color:var(--border);">More to come</div>
+    cardItems.push(`<div class="lethal-card" style="background:var(--bg-alt);cursor:default;pointer-events:none;border:1.5px dashed var(--border);">
+      <div class="lethal-icon">${icon('all',24)}</div>
+      <div class="lethal-club" style="color:var(--muted);">More to come</div>
       <div class="lethal-note">As the season plays on</div>
     </div>`);
   }
@@ -1229,33 +1228,21 @@ function bagResultsHTML() {
     </div>
   </div>`;
 
-  // Thumbnail strip — grouped by category with labels
-  const catOrder = BAG_CATEGORIES.map(c => c.id);
-  const grouped = {};
-  bag.forEach((c, i) => {
-    const cat = c.category || 'irons';
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push({c, i});
-  });
-
-  const carouselCards = catOrder
-    .filter(catId => grouped[catId] && grouped[catId].length > 0)
-    .map(catId => {
-      const catLabel = BAG_CATEGORIES.find(c => c.id === catId)?.label || catId;
-      const cards = grouped[catId].map(({c, i}) => {
-        const catIcon = c.category === 'fairway-wood' ? 'driver' : c.category;
-        const thumbImg = getClubImage(c.brand, c.model);
-        const thumbHTML = thumbImg
-          ? `<img src="${esc(thumbImg)}" alt="${esc(c.model)}">`
-          : icon(catIcon, 22);
-        return `<div class="bag-club-card${i===activeIdx?' active':''}" data-bag-club-idx="${i}">
-          <div class="bag-club-img">${thumbHTML}</div>
-          <div class="bag-club-model">${esc(c.model)}</div>
-          <div class="bag-club-brand">${esc(c.brand)}</div>
-        </div>`;
-      }).join('');
-      return `<div class="bag-cat-group"><div class="bag-cat-group-label">${esc(catLabel)}</div>${cards}</div>`;
-    }).join('');
+  // Thumbnail strip — flat list, category shown as small accent line per card
+  const carouselCards = bag.map((c, i) => {
+    const catIcon = c.category === 'fairway-wood' ? 'driver' : c.category;
+    const catLabel = BAG_CATEGORIES.find(x => x.id === c.category)?.label || c.category;
+    const thumbImg = getClubImage(c.brand, c.model);
+    const thumbHTML = thumbImg
+      ? `<img src="${esc(thumbImg)}" alt="${esc(c.model)}">`
+      : icon(catIcon, 22);
+    return `<div class="bag-club-card${i===activeIdx?' active':''}" data-bag-club-idx="${i}">
+      <div class="bag-club-img">${thumbHTML}</div>
+      <div class="bag-club-model">${esc(c.model)}</div>
+      <div class="bag-club-brand">${esc(c.brand)}</div>
+      <div class="bag-club-cat">${esc(catLabel)}</div>
+    </div>`;
+  }).join('');
 
   // Filter toggle — only Exact and Brand. No "All" — category-level matches
   // under a specific club heading break the connection.
