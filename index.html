@@ -14,14 +14,13 @@
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="The Gear Log">
   <meta property="og:description" content="Every shot has a club. The moments, the gear, the record.">
-  <meta property="og:url"         content="https://thegearlog.golf">
-  <meta property="og:image"       content="https://thegearlog.golf/og-image.png">
+  <meta property="og:url"         content="https://thatsdanmurphy.github.io/gear-log/">
+  <meta property="og:image"       content="https://thatsdanmurphy.github.io/gear-log/og-image.png">
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:title"      content="The Gear Log">
   <meta name="twitter:description" content="Every shot has a club. The moments, the gear, the record.">
   <meta name="twitter:image"      content="https://thegearlog.golf/og-image.png">
 
-  <script defer src="/_vercel/insights/script.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -351,13 +350,13 @@ function icon(name, size=13) {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const THIS_WEEK = {
-  label: "Week of April 20, 2026",
+  label: "2026 Masters",
   entryIds: [
-    "matt-fitzpatrick--rbc-heritage--2026",
-    "jon-rahm--liv-golf-mexico-city--2026",
     "rory-mcilroy--masters--2026",
     "scottie-scheffler--masters--2026",
-    "cameron-young--masters--2026"
+    "cameron-young--masters--2026",
+    "tyrrell-hatton--masters--2026",
+    "jack-nicklaus--masters--1986",
   ]
 };
 
@@ -373,41 +372,6 @@ const ERAS = [
 
 // ─── Entries ──────────────────────────────────────────────────────────────────
 const ENTRIES = [
-  {
-    id:"matt-fitzpatrick--rbc-heritage--2026", tier:"DOCUMENTED", rank:1, era:"modern", lore:false,
-    gearCategories:["irons","putter"],
-    player:{name:"Matt Fitzpatrick", type:"pro"},
-    event:{name:"2026 RBC Heritage", course:"Harbour Town Golf Links", date:"2026-04-19", round:"Playoff"},
-    conditions:{
-      weather:"Stiff sea breeze off Calibogue Sound. Pins tight.",
-      surface:"Harbour Town Golf Links — Bermuda, firm and fast.",
-      stakes:"First playoff hole vs. Scottie Scheffler. Winner takes the title."
-    },
-    gear:[
-      {category:"irons", brand:"Ping", model:"i210", item:"Ping i210 4-iron", note:"His dedicated long-iron slot — slightly more forgiving than the S55s he's been gaming since 2015, but built for exactly this: 200+ yards off the deck when the tournament is on the line.", affiliateUrl:null, clubImageUrl:null},
-      {category:"putter", brand:"Bettinardi", model:"DASS BB1", item:"Bettinardi DASS BB1", note:"Based on a model from a company that no longer exists. He plays it anyway. Equipment free agent — nothing in the bag is there by contract.", affiliateUrl:null, clubImageUrl:null}
-    ],
-    shot:"First playoff hole. 204 yards into a stiff sea breeze — 4-iron over the bunker, stopped 13 feet from the pin. Scheffler's 6-iron came up 37 yards short. That was the tournament.",
-    note:"Free agent. Two wins. Still choosing his own clubs.",
-    youtubeId:null
-  },
-  {
-    id:"jon-rahm--liv-golf-mexico-city--2026", tier:"DOCUMENTED", rank:2, era:"modern", lore:false,
-    gearCategories:["driver"],
-    player:{name:"Jon Rahm", type:"pro"},
-    event:{name:"2026 LIV Golf Mexico City", course:"Club de Golf Chapultepec", date:"2026-04-19", round:"Final Round"},
-    conditions:{
-      weather:"Thin air at 7,200 feet. Warm. Low humidity.",
-      surface:"Club de Golf Chapultepec — firm fairways, elevated carry.",
-      stakes:"Rahm already leading. Eagle on 3 put the tournament away before noon."
-    },
-    gear:[
-      {category:"driver", brand:"Callaway", model:"Quantum Triple Diamond", item:"Callaway Quantum Triple Diamond Driver", note:"New for 2026. 10.5°, Fujikura Ventus Black 7 X. At altitude it goes further than it has any right to — he drove a 390-yard par-4 to within a yard of the pin.", affiliateUrl:null, clubImageUrl:null}
-    ],
-    shot:"390 yards. He drove it to within a yard of the pin on the par-4 3rd — tapped in for eagle. Led by five at the turn. The field never recovered.",
-    note:"Chapultepec sits at 7,200 feet. He knows exactly what that does to a driver.",
-    youtubeId:null
-  },
   {
     id:"francis-ouimet--us-open--1913", tier:"LANDMARK", rank:6, era:"hickory", lore:true,
     gearCategories:["irons"],
